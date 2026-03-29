@@ -1,0 +1,5 @@
+{
+  "name": "MuseumDZ",
+  "description": "The official digital gateway to Algerian Museums, featuring interactive maps, real-time status, and a premium heritage-focused interface.",
+  "requestFramePermissions": ["geolocation"]
+}
