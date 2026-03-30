@@ -16,13 +16,13 @@ export const Dashboard: React.FC = () => {
   }));
 
   const stats = [
-    { label: t('dashboard.reg_inst'), value: '124', icon: Landmark, color: 'text-heritage-green' },
+    { label: t('dashboard.reg_inst'), value: '124', icon: Landmark, color: 'text-heritage-gold' },
     { label: t('dashboard.visitors'), value: (totalVisitors * 12).toLocaleString(), icon: Users, color: 'text-heritage-gold' },
-    { label: t('dashboard.satisfaction'), value: `${avgRating}/5.0`, icon: TrendingUp, color: 'text-heritage-green' },
+    { label: t('dashboard.satisfaction'), value: `${avgRating}/5.0`, icon: TrendingUp, color: 'text-heritage-gold' },
     { label: t('dashboard.wilayas'), value: '48', icon: MapIcon, color: 'text-heritage-red' },
   ];
 
-  const COLORS = ['#006233', '#B8860B', '#D21034', '#555555'];
+  const COLORS = ['#3E2723', '#B8860B', '#D21034', '#555555'];
 
   return (
     <section id="dashboard" className="py-24 md:py-40 bg-secondary/10 relative overflow-hidden border-y border-border/40">
@@ -32,8 +32,8 @@ export const Dashboard: React.FC = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 md:mb-24 gap-12">
           <div className="max-w-3xl">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-10 h-[1px] bg-heritage-green" />
-              <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-green">
+              <div className="w-10 h-[1px] bg-heritage-gold" />
+              <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-gold">
                 {t('dashboard.census')}
               </span>
             </div>
@@ -42,8 +42,8 @@ export const Dashboard: React.FC = () => {
           </div>
           <div className="flex items-center gap-6 bg-card border border-border/60 px-8 py-4 luxury-shadow backdrop-blur-sm">
             <div className="relative">
-              <ShieldCheck className="w-6 h-6 text-heritage-green relative z-10" />
-              <div className="absolute inset-0 bg-heritage-green/20 blur-md rounded-full" />
+              <ShieldCheck className="w-6 h-6 text-heritage-gold relative z-10" />
+              <div className="absolute inset-0 bg-heritage-gold/20 blur-md rounded-full" />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] uppercase tracking-[0.2em] font-black text-muted-foreground/80">{t('dashboard.integrity')}</span>
@@ -104,7 +104,7 @@ export const Dashboard: React.FC = () => {
                   />
                   <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fontWeight: 600, fill: '#9CA3AF' }} />
                   <Tooltip 
-                    cursor={{ fill: 'rgba(0,98,51,0.05)' }}
+                    cursor={{ fill: 'rgba(62,39,35,0.05)' }}
                     contentStyle={{ 
                       borderRadius: '0px', 
                       border: '1px solid var(--chart-tooltip-border)', 

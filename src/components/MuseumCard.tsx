@@ -27,13 +27,13 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
         {/* Archival Header - Recipe 1: Technical Grid */}
         <div className="bg-muted/30 px-6 py-3 border-b border-border/40 flex justify-between items-center font-mono">
           <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-heritage-green animate-pulse shadow-[0_0_8px_rgba(0,98,51,0.6)]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-heritage-gold animate-pulse shadow-[0_0_8px_rgba(197,160,89,0.6)]" />
             <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground/80 font-bold">
               REF_ID: {museum.id.padStart(4, '0')}
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-[9px] uppercase tracking-[0.2em] text-heritage-green font-black">
+            <span className="text-[9px] uppercase tracking-[0.2em] text-heritage-gold font-black">
               {isRTL ? (museum.arabicCategory || museum.category) : museum.category}
             </span>
             <div className="h-3 w-[1px] bg-border/60" />
@@ -61,7 +61,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
               >
                 <span className="relative z-10">{t('museum.access_coords')}</span>
                 <ArrowRight className={`relative z-10 w-4 h-4 transition-transform group-hover/btn:translate-x-2 ${isRTL ? 'rotate-180' : ''}`} />
-                <div className="absolute inset-0 bg-heritage-green translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-heritage-gold translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
               </button>
               <div className="flex items-center gap-4 text-white/40 text-[9px] uppercase tracking-[0.5em] font-bold">
                 <div className="h-[1px] w-8 bg-white/20" />
@@ -98,7 +98,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
                 {isRTL ? museum.name : museum.arabicName}
               </h4>
               <div className="flex flex-col items-end pt-2">
-                <span className="text-[11px] arabic-font font-black text-heritage-green">{isRTL ? museum.wilaya : museum.arabicWilaya}</span>
+                <span className="text-[11px] arabic-font font-black text-heritage-gold">{isRTL ? museum.wilaya : museum.arabicWilaya}</span>
                 <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40 font-bold mt-1">{t('museum.region')} 0{Math.floor(Math.random() * 9) + 1}</span>
               </div>
             </div>
@@ -144,8 +144,8 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
 
             <div className="mt-auto grid grid-cols-2 gap-10 pt-10 border-t border-border/40 font-mono">
               <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center border border-border/40 group-hover:border-heritage-green/40 transition-colors">
-                  <Clock className="w-5 h-5 text-heritage-green" />
+                <div className="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center border border-border/40 group-hover:border-heritage-gold/40 transition-colors">
+                  <Clock className="w-5 h-5 text-heritage-gold" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-black">{t('museum.status_open')}</span>
@@ -157,14 +157,14 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
                   onClick={handleGetDirections}
                   className="flex flex-col items-end group/map"
                 >
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-black group-hover/map:text-heritage-green transition-colors">{t('museum.access_coords')}</span>
-                  <span className="text-[12px] font-bold text-heritage-gold tracking-tight group-hover/map:text-heritage-green transition-colors">{museum.location.lat.toFixed(3)}°N, {museum.location.lng.toFixed(3)}°E</span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-black group-hover/map:text-heritage-gold transition-colors">{t('museum.access_coords')}</span>
+                  <span className="text-[12px] font-bold text-heritage-gold tracking-tight group-hover/map:text-heritage-gold transition-colors">{museum.location.lat.toFixed(3)}°N, {museum.location.lng.toFixed(3)}°E</span>
                 </button>
                 <button 
                   onClick={handleGetDirections}
-                  className="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center border border-border/40 group-hover:border-heritage-green/40 transition-colors"
+                  className="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center border border-border/40 group-hover:border-heritage-gold/40 transition-colors"
                 >
-                  <MapPin className="w-5 h-5 text-heritage-green" />
+                  <MapPin className="w-5 h-5 text-heritage-gold" />
                 </button>
               </div>
             </div>
@@ -175,14 +175,14 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
         <div className="px-10 py-6 bg-muted/30 border-t border-border/40 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="relative">
-              <ShieldCheck className="w-5 h-5 text-heritage-green relative z-10" />
-              <div className="absolute inset-0 bg-heritage-green/30 blur-md rounded-full" />
+              <ShieldCheck className="w-5 h-5 text-heritage-gold relative z-10" />
+              <div className="absolute inset-0 bg-heritage-gold/30 blur-md rounded-full" />
             </div>
             <span className="text-[10px] uppercase tracking-[0.4em] font-black text-muted-foreground/60">
               {t('museum.verified_archive')}
             </span>
           </div>
-          <div className="text-[12px] arabic-font font-black text-heritage-green/70">{t('museum.certified')}</div>
+          <div className="text-[12px] arabic-font font-black text-heritage-gold/70">{t('museum.certified')}</div>
         </div>
       </motion.div>
 
@@ -205,7 +205,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
             >
               <button 
                 onClick={() => setSelectedArtifact(null)}
-                className="absolute top-8 right-8 z-30 p-4 bg-white/5 text-white hover:bg-heritage-green transition-all rounded-full backdrop-blur-md border border-white/10"
+                className="absolute top-8 right-8 z-30 p-4 bg-white/5 text-white hover:bg-heritage-gold transition-all rounded-full backdrop-blur-md border border-white/10"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -245,7 +245,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
 
                   <div className="pt-12 border-t border-border/40 flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                      <Landmark className="w-5 h-5 text-heritage-green" />
+                      <Landmark className="w-5 h-5 text-heritage-gold" />
                       <div className="flex flex-col">
                         <span className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-bold">{t('artifact.custodian')}</span>
                         <span className="text-[12px] font-bold tracking-tight">{isRTL ? museum.arabicName : museum.name}</span>

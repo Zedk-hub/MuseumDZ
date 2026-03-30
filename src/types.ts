@@ -1,4 +1,4 @@
-export type Language = 'en' | 'ar';
+export type Language = 'en' | 'ar' | 'fr';
 
 export type Category = 'Archaeology' | 'Arts' | 'History' | 'Ethnography' | 'Natural History';
 

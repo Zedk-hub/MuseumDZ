@@ -7,10 +7,11 @@
   --font-mono: "JetBrains Mono", monospace;
   --font-arabic: "Noto Sans Arabic", sans-serif;
 
-  --color-heritage-green: #006233;
+  --color-heritage-green: #3E2723;
   --color-heritage-red: #D21034;
   --color-heritage-gold: #C5A059;
-  --color-heritage-sand: #F5F2ED;
+  --color-heritage-sand: #F5F5DC;
+  --color-dark-brown: #3E2723;
   
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
@@ -19,55 +20,55 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --background: 60 56% 91%; /* Beige #F5F5DC approx */
+    --foreground: 12 28% 19%; /* Dark Brown #3E2723 approx */
+    --card: 60 56% 95%;
+    --card-foreground: 12 28% 19%;
+    --popover: 60 56% 95%;
+    --popover-foreground: 12 28% 19%;
+    --primary: 12 28% 19%;
+    --primary-foreground: 60 56% 91%;
+    --secondary: 60 30% 85%;
+    --secondary-foreground: 12 28% 19%;
+    --muted: 60 30% 85%;
+    --muted-foreground: 12 15% 40%;
+    --accent: 60 30% 85%;
+    --accent-foreground: 12 28% 19%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-grid: #E5E7EB;
-    --chart-tooltip-bg: rgba(255, 255, 255, 0.95);
-    --chart-tooltip-border: rgba(0, 0, 0, 0.1);
-    --body-bg: #F5F2ED;
+    --border: 12 15% 80%;
+    --input: 12 15% 80%;
+    --ring: 12 28% 19%;
+    --chart-grid: #D7CCC8;
+    --chart-tooltip-bg: rgba(245, 245, 220, 0.95);
+    --chart-tooltip-border: rgba(62, 39, 35, 0.1);
+    --body-bg: #F5F5DC;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 12 28% 6%; /* Burnt Brown #1B110F approx */
+    --foreground: 60 56% 91%; /* Beige text in dark mode */
+    --card: 12 28% 8%;
+    --card-foreground: 60 56% 91%;
+    --popover: 12 28% 8%;
+    --popover-foreground: 60 56% 91%;
+    --primary: 60 56% 91%;
+    --primary-foreground: 12 28% 6%;
+    --secondary: 12 20% 12%;
+    --secondary-foreground: 60 56% 91%;
+    --muted: 12 20% 12%;
+    --muted-foreground: 60 20% 60%;
+    --accent: 12 20% 12%;
+    --accent-foreground: 60 56% 91%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    --chart-grid: #374151;
-    --chart-tooltip-bg: rgba(17, 24, 39, 0.95);
-    --chart-tooltip-border: rgba(255, 255, 255, 0.1);
-    --body-bg: #0a0a0a;
+    --border: 12 20% 15%;
+    --input: 12 20% 15%;
+    --ring: 60 56% 91%;
+    --chart-grid: #2D1B18;
+    --chart-tooltip-bg: rgba(27, 17, 15, 0.95);
+    --chart-tooltip-border: rgba(245, 245, 220, 0.1);
+    --body-bg: #1B110F;
   }
 }
 
@@ -86,11 +87,32 @@
   }
 
   .cultural-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23006233' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6zM36 4V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233E2723' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6zM36 4V0h-2v4h-4v2h4v4h2V6h4V4h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .paper-texture {
+    position: relative;
+  }
+
+  .paper-texture::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .dark .paper-texture::before {
+    opacity: 0.02;
   }
 
   .national-seal {
-    background: radial-gradient(circle at center, #006233 0%, #004d28 100%);
+    background: radial-gradient(circle at center, #5D4037 0%, #3E2723 100%);
     mask-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L93.3 25 L93.3 75 L50 100 L6.7 75 L6.7 25 Z' fill='black'/%3E%3C/svg%3E");
     mask-size: contain;
     mask-repeat: no-repeat;
@@ -99,7 +121,7 @@
   .atmosphere {
     background: 
       radial-gradient(circle at 50% 30%, rgba(197, 160, 89, 0.15) 0%, transparent 60%),
-      radial-gradient(circle at 10% 80%, rgba(0, 98, 51, 0.15) 0%, transparent 50%);
+      radial-gradient(circle at 10% 80%, rgba(62, 39, 35, 0.15) 0%, transparent 50%);
     filter: blur(80px);
   }
 

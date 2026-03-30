@@ -11,6 +11,12 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark }) => {
   const { language, setLanguage, t } = useLanguage();
 
+  const cycleLanguage = () => {
+    if (language === 'ar') setLanguage('fr');
+    else if (language === 'fr') setLanguage('en');
+    else setLanguage('ar');
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-2xl border-b border-border/40">
       <div className="max-w-[1800px] mx-auto flex items-stretch">
@@ -49,16 +55,16 @@ export const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark }) => {
         {/* Action Section */}
         <div className="flex items-center gap-6 md:gap-10 px-8 md:px-12">
           <button 
-            onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-            className="hidden sm:flex items-center gap-4 text-muted-foreground hover:text-heritage-green cursor-pointer transition-all group"
+            onClick={cycleLanguage}
+            className="hidden sm:flex items-center gap-4 text-muted-foreground hover:text-heritage-gold cursor-pointer transition-all group"
           >
-            <Globe className="w-4 h-4 group-hover:rotate-180 transition-transform duration-700" />
-            <span className="text-[9px] font-black uppercase tracking-[0.3em]">{language === 'en' ? 'AR' : 'EN'}</span>
+            <Globe className="w-4 h-4 group-hover:rotate-180 transition-transform duration-700 text-heritage-gold/60 group-hover:text-heritage-gold" />
+            <span className="text-[9px] font-black uppercase tracking-[0.3em]">{language.toUpperCase()}</span>
           </button>
           
           <button 
             onClick={toggleDark}
-            className="p-3 hover:text-heritage-green transition-all rounded-full hover:bg-muted relative group"
+            className="p-3 hover:text-heritage-gold transition-all rounded-full hover:bg-muted relative group"
             aria-label="Toggle theme"
           >
             {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -67,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark }) => {
           <button className="relative overflow-hidden group bg-foreground text-background px-10 py-4 text-[10px] uppercase tracking-[0.4em] font-black transition-all hover:pr-14">
             <span className="relative z-10">{t('nav.access')}</span>
             <ArrowRight className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-            <div className="absolute inset-0 bg-heritage-green translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-heritage-gold translate-x-full group-hover:translate-x-0 transition-transform duration-500" />
           </button>
         </div>
       </div>

@@ -45,7 +45,7 @@ export const HistoricalEras: React.FC = () => {
                     <div className={`w-16 h-16 rounded-full bg-${era.color}/10 flex items-center justify-center mb-10`}>
                       <History className={`w-8 h-8 text-${era.color}`} />
                     </div>
-                    <h4 className="text-4xl md:text-7xl display-font font-bold mb-4 tracking-tight">
+                    <h4 className="text-4xl md:text-7xl display-font font-bold mb-4 tracking-tight text-foreground">
                       {isRTL ? era.arabicTitle : era.title}
                     </h4>
                     <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed font-light italic mb-12 max-w-xl">
@@ -89,10 +89,10 @@ export const HistoricalEras: React.FC = () => {
                     </div>
                     <div className="flex gap-4">
                       <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm">
-                        <Landmark className="w-5 h-5 text-white" />
+                        <Landmark className="w-5 h-5 text-heritage-gold" />
                       </div>
                       <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm">
-                        <ScrollText className="w-5 h-5 text-white" />
+                        <ScrollText className="w-5 h-5 text-heritage-gold" />
                       </div>
                     </div>
                   </div>

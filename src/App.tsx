@@ -12,7 +12,7 @@ import { useLanguage } from './lib/LanguageContext';
 const Footer: React.FC = () => {
   const { t, isRTL } = useLanguage();
   return (
-    <footer className="bg-foreground text-background py-32 md:py-48 relative overflow-hidden">
+    <footer className="bg-black text-white py-32 md:py-48 relative overflow-hidden">
       <div className="absolute inset-0 cultural-pattern opacity-[0.03] pointer-events-none" />
       <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-20 lg:gap-32 mb-32">
@@ -23,12 +23,12 @@ const Footer: React.FC = () => {
               </div>
               <span className="text-2xl md:text-3xl display-font font-bold tracking-tighter uppercase">{t('hero.subtitle')}</span>
             </div>
-            <p className="text-lg md:text-xl text-background/40 leading-relaxed font-light italic mb-12 max-w-md">
+            <p className="text-lg md:text-xl text-white/40 leading-relaxed font-light italic mb-12 max-w-md">
               "{t('footer.tagline')}"
             </p>
             <div className="flex gap-8">
               {['Instagram', 'Twitter', 'LinkedIn'].map((social) => (
-                <a key={social} href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-background/60 hover:text-heritage-green transition-colors">
+                <a key={social} href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/60 hover:text-heritage-green transition-colors">
                   {social}
                 </a>
               ))}
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-6">
               {['nav.collections', 'nav.exhibitions', 'nav.archives', 'nav.analytics'].map((key) => (
                 <li key={key}>
-                  <a href="#" className="text-lg font-light text-background/60 hover:text-white transition-colors">{t(key)}</a>
+                  <a href="#" className="text-lg font-light text-white/60 hover:text-white transition-colors">{t(key)}</a>
                 </li>
               ))}
             </ul>
@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
                 { key: 'footer.educational', label: 'Educational' }
               ].map((item) => (
                 <li key={item.key}>
-                  <a href="#" className="text-lg font-light text-background/60 hover:text-white transition-colors">{t(item.key)}</a>
+                  <a href="#" className="text-lg font-light text-white/60 hover:text-white transition-colors">{t(item.key)}</a>
                 </li>
               ))}
             </ul>
@@ -66,26 +66,26 @@ const Footer: React.FC = () => {
             <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-green mb-10">{t('footer.headquarters')}</h4>
             <div className="space-y-8">
               <div>
-                <div className="text-[10px] uppercase tracking-widest font-black text-background/40 mb-2">{t('footer.location')}</div>
+                <div className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{t('footer.location')}</div>
                 <div className="text-lg font-light">{t('hero.algiers')}</div>
               </div>
               <div>
-                <div className="text-[10px] uppercase tracking-widest font-black text-background/40 mb-2">{t('footer.contact')}</div>
+                <div className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{t('footer.contact')}</div>
                 <div className="text-lg font-light">registry@heritage.gov.dz</div>
               </div>
             </div>
           </div>
         </div>
         
-        <div className="pt-20 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="text-[11px] uppercase tracking-[0.4em] font-black text-background/40">
+        <div className="pt-20 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40">
             {t('footer.copyright')}
           </div>
           <div className="flex items-center gap-12">
-            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-background/40 hover:text-white transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-background/40 hover:text-white transition-colors">{t('footer.terms')}</a>
+            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.privacy')}</a>
+            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.terms')}</a>
           </div>
-          <div className="text-2xl md:text-3xl arabic-serif text-background/20" dir="rtl">
+          <div className="text-2xl md:text-3xl arabic-serif text-white/20" dir="rtl">
             {t('footer.republic')}
           </div>
         </div>
@@ -99,6 +99,14 @@ export default function App() {
   const [isDark, setIsDark] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (isDark) {
@@ -124,14 +132,47 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-heritage-gold selection:text-white">
-      <Navbar isDark={isDark} toggleDark={() => setIsDark(!isDark)} />
-      
-      <main>
-        <Hero onSearch={setSearchQuery} onFilterChange={setCategoryFilter} />
+    <AnimatePresence mode="wait">
+      {loading ? (
+        <motion.div
+          key="loader"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] bg-background flex items-center justify-center"
+        >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-center"
+          >
+            <h1 className="text-6xl md:text-8xl font-black display-font text-foreground tracking-tighter mb-4">
+              Museum<span className="text-heritage-green">DZ</span>
+            </h1>
+            <div className="w-24 h-[2px] bg-foreground mx-auto overflow-hidden">
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: "100%" }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-full h-full bg-heritage-gold"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : (
+        <motion.div 
+          key="content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="min-h-screen bg-background text-foreground selection:bg-heritage-gold selection:text-white paper-texture"
+        >
+          <Navbar isDark={isDark} toggleDark={() => setIsDark(!isDark)} />
+          
+          <main>
+            <Hero onSearch={setSearchQuery} onFilterChange={setCategoryFilter} />
 
         {/* Mission Section - Recipe 6: Warm Organic / Cultural */}
-        <section className="py-32 md:py-52 bg-[#f5f5f0] dark:bg-muted/5 relative overflow-hidden transition-colors duration-500">
+        <section className="py-32 md:py-52 bg-background/50 dark:bg-muted/5 relative overflow-hidden transition-colors duration-500">
           <div className="max-w-[1400px] mx-auto px-8 md:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
               <motion.div
@@ -141,17 +182,17 @@ export default function App() {
                 className="relative"
               >
                 <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-[1px] bg-[#5A5A40] dark:bg-heritage-gold" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-[#5A5A40] dark:text-heritage-gold">
+                  <div className="w-12 h-[1px] bg-heritage-green/40 dark:bg-heritage-gold" />
+                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-green/60 dark:text-heritage-gold">
                     {t('mission.tagline')} — {t('mission.arabic_title')}
                   </span>
                 </div>
-                <h2 className="text-5xl md:text-8xl serif font-light mb-10 leading-[1.1] text-[#1a1a1a] dark:text-foreground">
+                <h2 className="text-5xl md:text-8xl serif font-light mb-10 leading-[1.1] text-foreground dark:text-foreground">
                   {t('mission.title').split(' ').slice(0, 2).join(' ')} <br />
                   <span className="italic">{t('mission.title').split(' ').slice(2).join(' ')}</span>
                 </h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-[#5A5A40]/60 dark:text-foreground/60 mb-12" dir="rtl">{t('mission.arabic_title')}</h3>
-                <p className="text-lg md:text-2xl text-[#1a1a1a]/70 dark:text-foreground/70 mb-12 leading-relaxed font-light italic">
+                <h3 className="text-3xl md:text-5xl arabic-serif text-foreground/60 dark:text-foreground/60 mb-12" dir="rtl">{t('mission.arabic_title')}</h3>
+                <p className="text-lg md:text-2xl text-foreground/70 dark:text-foreground/70 mb-12 leading-relaxed font-light italic">
                   "{t('mission.description')}"
                 </p>
                 <div className="flex flex-wrap gap-8">
@@ -252,7 +293,7 @@ export default function App() {
                     </div>
 
                     <div className="relative z-10">
-                      <div className="w-4 h-4 bg-heritage-green rounded-full border-4 border-background shadow-[0_0_0_10px_rgba(0,98,51,0.1)] hidden md:block" />
+                      <div className="w-4 h-4 bg-heritage-green rounded-full border-4 border-background shadow-[0_0_0_10px_rgba(62,39,35,0.1)] hidden md:block" />
                     </div>
 
                     <div className="flex-1">
@@ -706,19 +747,19 @@ export default function App() {
         {/* Newsletter Section - Recipe 11: SaaS Landing / Split Layout */}
         <section className="relative overflow-hidden border-t border-border/40">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-[600px]">
-            <div className="bg-foreground text-background p-16 md:p-24 flex flex-col justify-center relative overflow-hidden">
+            <div className="bg-black text-white p-16 md:p-24 flex flex-col justify-center relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-full cultural-pattern opacity-[0.05] pointer-events-none" />
               <div className="relative z-10">
                 <h2 className="text-5xl md:text-8xl display-font font-bold mb-8 tracking-tighter leading-[0.85]">{t('newsletter.title').split(' ').slice(0, 2).join(' ')} <br /> <span className="text-heritage-green italic font-light">{t('newsletter.title').split(' ').slice(2).join(' ')}</span></h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-background/60 mb-12" dir="rtl">{t('newsletter.arabic_title')}</h3>
-                <p className="text-lg text-background/40 max-w-md mb-12 font-light italic">
+                <h3 className="text-3xl md:text-5xl arabic-serif text-white/60 mb-12" dir="rtl">{t('newsletter.arabic_title')}</h3>
+                <p className="text-lg text-white/40 max-w-md mb-12 font-light italic">
                   "{t('newsletter.description')}"
                 </p>
                 <div className="flex gap-4 max-w-md">
                   <input 
                     type="email" 
                     placeholder={t('newsletter.placeholder')} 
-                    className="flex-1 bg-background/10 border border-background/20 px-8 py-5 text-background text-[11px] uppercase tracking-widest outline-none focus:border-heritage-green transition-colors"
+                    className="flex-1 bg-white/10 border border-white/20 px-8 py-5 text-white text-[11px] uppercase tracking-widest outline-none focus:border-heritage-green transition-colors"
                   />
                   <button className="bg-heritage-green text-white px-10 py-5 text-[11px] uppercase tracking-[0.4em] font-black hover:bg-heritage-green/90 transition-all">
                     {t('newsletter.subscribe')}
@@ -747,7 +788,7 @@ export default function App() {
         </section>
 
         {/* Cultural Map (Atlas) - Recipe 7: Atmospheric / Immersive Media */}
-        <section className="py-32 md:py-60 bg-foreground relative overflow-hidden">
+        <section className="py-32 md:py-60 bg-black text-white relative overflow-hidden">
           <div className="absolute inset-0 atmosphere opacity-20 pointer-events-none" />
           <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
@@ -758,11 +799,11 @@ export default function App() {
                     {t('atlas.tagline')} — {t('atlas.arabic_title')}
                   </span>
                 </div>
-                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9] text-background">
+                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9] text-white">
                   {t('atlas.title').split(' ').slice(0, 1).join(' ')} <br />
                   <span className="text-heritage-green italic font-light">{t('atlas.title').split(' ').slice(1).join(' ')}</span>
                 </h2>
-                <h3 className="text-4xl md:text-7xl arabic-serif text-background/40 leading-tight mb-16" dir="rtl">{t('atlas.arabic_title')}</h3>
+                <h3 className="text-4xl md:text-7xl arabic-serif text-white/40 leading-tight mb-16" dir="rtl">{t('atlas.arabic_title')}</h3>
                 
                 {/* Monitoring HUD */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
@@ -772,9 +813,9 @@ export default function App() {
                     { label: t('atlas.alt'), value: '124m' },
                     { label: t('atlas.status'), value: t('atlas.nominal'), color: 'text-heritage-green' }
                   ].map((stat) => (
-                    <div key={stat.label} className="flex flex-col border-l border-background/10 pl-6">
-                      <span className="text-[10px] uppercase tracking-widest font-black text-background/40 mb-2">{stat.label}</span>
-                      <span className={`text-xl font-mono tracking-tighter ${stat.color || 'text-background'}`}>{stat.value}</span>
+                    <div key={stat.label} className="flex flex-col border-l border-white/10 pl-6">
+                      <span className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{stat.label}</span>
+                      <span className={`text-xl font-mono tracking-tighter ${stat.color || 'text-white'}`}>{stat.value}</span>
                     </div>
                   ))}
                 </div>
@@ -883,8 +924,9 @@ export default function App() {
           </div>
         </section>
       </main>
-
       <Footer />
-    </div>
+    </motion.div>
+    )}
+    </AnimatePresence>
   );
 }
