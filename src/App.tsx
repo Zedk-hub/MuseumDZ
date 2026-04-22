@@ -4,89 +4,81 @@ import { Hero } from './components/Hero';
 import { MuseumCard } from './components/MuseumCard';
 import { Dashboard } from './components/Dashboard';
 import { HistoricalEras } from './components/HistoricalEras';
+import { HeritageGuide } from './components/HeritageGuide';
+import { LegalModal } from './components/LegalModal';
 import { museums } from './data/museums';
 import { motion, AnimatePresence } from 'motion/react';
-import { Landmark, Info, Mail, Phone, MapPin, Facebook, Twitter, Instagram, ExternalLink, ArrowRight, ShieldCheck, Globe, ScrollText, Award, Compass, Send } from 'lucide-react';
+import { Landmark, Info, Mail, Phone, MapPin, Facebook, Twitter, Instagram, ExternalLink, ArrowRight, ShieldCheck, Globe, ScrollText, Award, Compass, Send, X } from 'lucide-react';
 import { useLanguage } from './lib/LanguageContext';
+import { useFavorites } from './lib/FavoritesContext';
+import { Filter, Bookmark, Grid, Heart, ChevronDown } from 'lucide-react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenLegal: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
   const { t, isRTL } = useLanguage();
   return (
-    <footer className="bg-black text-white py-32 md:py-48 relative overflow-hidden">
+    <footer className="bg-dark-brown text-heritage-beige py-24 md:py-48 relative overflow-hidden">
       <div className="absolute inset-0 cultural-pattern opacity-[0.03] pointer-events-none" />
-      <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-20 lg:gap-32 mb-32">
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-4 mb-12">
-              <div className="w-12 h-12 bg-heritage-green rounded-full flex items-center justify-center">
-                <Landmark className="text-white w-6 h-6" />
-              </div>
-              <span className="text-2xl md:text-3xl display-font font-bold tracking-tighter uppercase">{t('hero.subtitle')}</span>
-            </div>
-            <p className="text-lg md:text-xl text-white/40 leading-relaxed font-light italic mb-12 max-w-md">
-              "{t('footer.tagline')}"
-            </p>
-            <div className="flex gap-8">
-              {['Instagram', 'Twitter', 'LinkedIn'].map((social) => (
-                <a key={social} href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/60 hover:text-heritage-green transition-colors">
-                  {social}
-                </a>
-              ))}
-            </div>
+      <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10 text-center md:text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 md:gap-32 mb-24 md:mb-32">
+          <div className="lg:col-span-6 flex flex-col items-center md:items-start text-center md:text-left">
+                <div className="flex justify-between items-start mb-8 md:mb-12">
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <div className="w-12 h-12 bg-white flex items-center justify-center rounded-full border border-heritage-gold/30 shadow-2xl">
+                      <Landmark className="text-dark-brown w-6 h-6" />
+                    </div>
+                    <span className="text-xl md:text-3xl display-font font-bold tracking-tighter uppercase text-heritage-beige/90">{t('hero.subtitle')}</span>
+                  </div>
+                </div>
+                <p className="text-base md:text-xl text-heritage-beige/60 leading-relaxed font-bold italic mb-10 max-w-lg">
+                  "{t('footer.tagline')}"
+                </p>
           </div>
           
-          <div className="lg:col-span-2">
-            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-green mb-10">{t('footer.registry')}</h4>
-            <ul className="space-y-6">
-              {['nav.collections', 'nav.exhibitions', 'nav.archives', 'nav.analytics'].map((key) => (
-                <li key={key}>
-                  <a href="#" className="text-lg font-light text-white/60 hover:text-white transition-colors">{t(key)}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="lg:col-span-2">
-            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-green mb-10">{t('footer.archives')}</h4>
+          <div className="lg:col-span-3">
+            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-beige mb-10">{t('footer.registry')}</h4>
             <ul className="space-y-6">
               {[
-                { key: 'footer.research', label: 'Research' },
-                { key: 'footer.digital_twins', label: 'Digital Twins' },
-                { key: 'footer.publications', label: 'Publications' },
-                { key: 'footer.educational', label: 'Educational' }
+                { key: 'nav.collections', href: '#registry' },
+                { key: 'nav.exhibitions', href: '#registry' },
+                { key: 'nav.archives', href: '#eras' },
+                { key: 'nav.analytics', href: '#dashboard' }
               ].map((item) => (
                 <li key={item.key}>
-                  <a href="#" className="text-lg font-light text-white/60 hover:text-white transition-colors">{t(item.key)}</a>
+                  <a href={item.href} className="text-lg font-black text-white/50 hover:text-heritage-gold transition-colors">{t(item.key)}</a>
                 </li>
               ))}
             </ul>
           </div>
           
           <div className="lg:col-span-3">
-            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-green mb-10">{t('footer.headquarters')}</h4>
+            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-beige mb-10">{t('footer.about')}</h4>
             <div className="space-y-8">
               <div>
-                <div className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{t('footer.location')}</div>
-                <div className="text-lg font-light">{t('hero.algiers')}</div>
-              </div>
-              <div>
-                <div className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{t('footer.contact')}</div>
-                <div className="text-lg font-light">registry@heritage.gov.dz</div>
+                <button 
+                  onClick={onOpenLegal}
+                  className="text-sm font-bold leading-relaxed text-white/50 italic text-left hover:text-heritage-gold transition-colors"
+                >
+                  {t('footer.disclaimer_text')}
+                </button>
               </div>
             </div>
           </div>
         </div>
         
         <div className="pt-20 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40">
+          <div className="text-[11px] uppercase tracking-[0.4em] font-black text-white/30">
             {t('footer.copyright')}
           </div>
           <div className="flex items-center gap-12">
-            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.terms')}</a>
+            <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.privacy')}</button>
+            <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.terms')}</button>
           </div>
-          <div className="text-2xl md:text-3xl arabic-serif text-white/20" dir="rtl">
-            {t('footer.republic')}
+          <div className="text-2xl md:text-3xl arabic-serif text-white/10" dir="rtl">
+            {t('footer.independent_note')}
           </div>
         </div>
       </div>
@@ -95,11 +87,29 @@ const Footer: React.FC = () => {
 };
 
 export default function App() {
-  const { t, isRTL } = useLanguage();
-  const [isDark, setIsDark] = useState(false);
+  const { t, isRTL, language } = useLanguage();
+  const { favorites } = useFavorites();
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [wilayaFilter, setWilayaFilter] = useState('All');
+  const [eraFilter, setEraFilter] = useState('All');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+
+  const availableWilayas = useMemo(() => {
+    const list = Array.from(new Set(museums.map(m => m.wilaya))).sort();
+    return ['All', ...list];
+  }, []);
+
+  const availableEras = useMemo(() => {
+    const list = Array.from(new Set(museums.filter(m => m.period).map(m => m.period!))).sort();
+    return ['All', ...list];
+  }, []);
+
+  const categories = ['All', 'Archaeology', 'Arts', 'History', 'Ethnography', 'Natural History'];
+
+  const [showCharter, setShowCharter] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,14 +118,6 @@ export default function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDark]);
-
   const filteredMuseums = useMemo(() => {
     return museums.filter(m => {
       const matchesSearch = m.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -123,9 +125,13 @@ export default function App() {
                            (m.arabicName && m.arabicName.includes(searchQuery)) ||
                            (m.arabicWilaya && m.arabicWilaya.includes(searchQuery));
       const matchesCategory = categoryFilter === 'All' || m.category === categoryFilter;
-      return matchesSearch && matchesCategory;
+      const matchesWilaya = wilayaFilter === 'All' || m.wilaya === wilayaFilter;
+      const matchesEra = eraFilter === 'All' || m.period === eraFilter;
+      const matchesFavorites = !showFavoritesOnly || favorites.includes(m.id);
+      
+      return matchesSearch && matchesCategory && matchesWilaya && matchesEra && matchesFavorites;
     });
-  }, [searchQuery, categoryFilter]);
+  }, [searchQuery, categoryFilter, wilayaFilter, eraFilter, showFavoritesOnly, favorites]);
 
   const allArtifacts = useMemo(() => {
     return museums.flatMap(m => m.artifacts || []).slice(0, 6);
@@ -146,10 +152,10 @@ export default function App() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="text-center"
           >
-            <h1 className="text-6xl md:text-8xl font-black display-font text-foreground tracking-tighter mb-4">
-              Museum<span className="text-heritage-green">DZ</span>
+            <h1 className="text-4xl md:text-8xl font-black display-font text-heritage-brown tracking-tighter mb-4 px-6">
+              Museum<span className="text-heritage-gold">DZ</span>
             </h1>
-            <div className="w-24 h-[2px] bg-foreground mx-auto overflow-hidden">
+            <div className="w-20 h-[1px] bg-heritage-gold/20 mx-auto overflow-hidden">
               <motion.div
                 initial={{ x: "-100%" }}
                 animate={{ x: "100%" }}
@@ -164,401 +170,270 @@ export default function App() {
           key="content"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="min-h-screen bg-background text-foreground selection:bg-heritage-gold selection:text-white paper-texture"
+          className="min-h-screen bg-heritage-beige text-dark-brown selection:bg-heritage-gold selection:text-white paper-texture"
         >
-          <Navbar isDark={isDark} toggleDark={() => setIsDark(!isDark)} />
-          
-          <main>
+          <main className="relative">
             <Hero onSearch={setSearchQuery} onFilterChange={setCategoryFilter} />
 
-        {/* Mission Section - Recipe 6: Warm Organic / Cultural */}
-        <section className="py-32 md:py-52 bg-background/50 dark:bg-muted/5 relative overflow-hidden transition-colors duration-500">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-[1px] bg-heritage-green/40 dark:bg-heritage-gold" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-green/60 dark:text-heritage-gold">
-                    {t('mission.tagline')} — {t('mission.arabic_title')}
-                  </span>
-                </div>
-                <h2 className="text-5xl md:text-8xl serif font-light mb-10 leading-[1.1] text-foreground dark:text-foreground">
-                  {t('mission.title').split(' ').slice(0, 2).join(' ')} <br />
-                  <span className="italic">{t('mission.title').split(' ').slice(2).join(' ')}</span>
-                </h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-foreground/60 dark:text-foreground/60 mb-12" dir="rtl">{t('mission.arabic_title')}</h3>
-                <p className="text-lg md:text-2xl text-foreground/70 dark:text-foreground/70 mb-12 leading-relaxed font-light italic">
-                  "{t('mission.description')}"
-                </p>
-                <div className="flex flex-wrap gap-8">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-white dark:bg-muted flex items-center justify-center shadow-sm">
-                      <ShieldCheck className="w-6 h-6 text-[#5A5A40] dark:text-heritage-gold" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-widest font-black text-[#5A5A40] dark:text-foreground/40">{t('mission.preservation')}</span>
-                      <span className="text-sm font-bold">{t('mission.archives')}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-full bg-white dark:bg-muted flex items-center justify-center shadow-sm">
-                      <Globe className="w-6 h-6 text-[#5A5A40] dark:text-heritage-gold" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-[10px] uppercase tracking-widest font-black text-[#5A5A40] dark:text-foreground/40">{t('mission.accessibility')}</span>
-                      <span className="text-sm font-bold">{t('mission.digital')}</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-              <div className="relative">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  className="aspect-[4/5] rounded-[40px] overflow-hidden luxury-shadow relative z-10"
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=1200" 
-                    alt="Cultural Heritage Detail"
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
-                </motion.div>
-                <div className="absolute -top-12 -right-12 w-64 h-64 bg-heritage-gold/10 rounded-full blur-3xl" />
-                <div className="absolute -bottom-12 -left-12 w-80 h-80 bg-heritage-green/5 rounded-full blur-3xl" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <HistoricalEras />
-
-        {/* Heritage Chronicles - Vertical Timeline - Recipe 9: Oversized Typographic */}
-        <section className="py-32 md:py-60 bg-background relative overflow-hidden">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="flex flex-col items-center mb-32 text-center">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-[1px] bg-heritage-gold" />
-                <span className="text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-black text-heritage-gold">
-                  {t('chronicles.tagline')} — {t('chronicles.arabic_title')}
-                </span>
-              </div>
-              <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9]">
-                {t('chronicles.title').split(' ').slice(0, 2).join(' ')} <br />
-                <span className="text-heritage-green italic font-light">{t('chronicles.title').split(' ').slice(2).join(' ')}</span>
-              </h2>
-              <h3 className="text-4xl md:text-7xl arabic-serif text-foreground/40 leading-tight" dir="rtl">{t('chronicles.arabic_title')}</h3>
-            </div>
-
-            <div className="relative">
-              {/* Vertical Line */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-border/40 hidden md:block" />
-              
-              <div className="space-y-32 md:space-y-64">
-                {[
-                  { year: '10,000 BC', title: 'Tassili n\'Ajjer', arabicTitle: 'طاسيلي ناجر', desc: 'The world\'s largest open-air museum of prehistoric rock art.', img: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=1200' },
-                  { year: '200 AD', title: 'Roman Timgad', arabicTitle: 'تيمقاد الرومانية', desc: 'A perfectly preserved Roman military colony, the "Pompeii of Africa".', img: 'https://images.unsplash.com/photo-1599733589046-9b8308b5b50d?auto=format&fit=crop&q=80&w=1200' },
-                  { year: '1067 AD', title: 'Beni Hammad Fort', arabicTitle: 'قلعة بني حماد', desc: 'The first capital of the Hammadid emirs, a masterpiece of Islamic architecture.', img: 'https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=1200' }
-                ].map((item, idx) => (
+            {/* Mission Section - Recipe 6: Warm Organic / Cultural */}
+            <section className="py-24 md:py-52 bg-heritage-sand relative overflow-hidden transition-colors duration-500 border-b border-heritage-gold/10">
+              <div className="absolute inset-0 cultural-pattern opacity-[0.03] pointer-events-none" />
+              <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
                   <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className={`flex flex-col md:flex-row items-center gap-16 md:gap-32 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                    className="relative order-2 lg:order-1"
                   >
-                    <div className="flex-1 text-center md:text-right">
-                      {idx % 2 !== 0 && (
-                        <div className="hidden md:block">
-                          <span className="text-[120px] display-font font-black text-muted/10 leading-none mb-8 block">{item.year}</span>
-                          <h4 className="text-4xl display-font font-bold mb-4">{item.title}</h4>
-                          <h5 className="text-2xl arabic-serif text-heritage-green mb-6" dir="rtl">{item.arabicTitle}</h5>
-                          <p className="text-lg text-muted-foreground font-light italic leading-relaxed max-w-md ml-auto">"{item.desc}"</p>
-                        </div>
-                      )}
-                      {idx % 2 === 0 && (
-                        <div className="md:hidden">
-                          <span className="text-8xl display-font font-black text-muted/10 leading-none mb-8 block">{item.year}</span>
-                          <h4 className="text-4xl display-font font-bold mb-4">{item.title}</h4>
-                          <h5 className="text-2xl arabic-serif text-heritage-green mb-6" dir="rtl">{item.arabicTitle}</h5>
-                          <p className="text-lg text-muted-foreground font-light italic leading-relaxed">"{item.desc}"</p>
-                        </div>
-                      )}
+                    <div className="aspect-[4/5] md:aspect-[3/4] rounded-[60px] md:rounded-[120px] overflow-hidden luxury-shadow relative z-10 border border-heritage-gold/20">
+                      <img 
+                        src="https://i.postimg.cc/zBsM9y7x/photo-2026-04-22-20-46-54.jpg" 
+                        alt="Project Legacy"
+                        className="w-full h-full object-cover grayscale-[0.2] hover:grayscale-0 transition-all duration-1000"
+                        referrerPolicy="no-referrer"
+                      />
                     </div>
-
-                    <div className="relative z-10">
-                      <div className="w-4 h-4 bg-heritage-green rounded-full border-4 border-background shadow-[0_0_0_10px_rgba(62,39,35,0.1)] hidden md:block" />
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="aspect-video md:aspect-[4/3] rounded-[40px] overflow-hidden luxury-shadow group">
-                        <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" referrerPolicy="no-referrer" />
-                      </div>
-                      {idx % 2 === 0 && (
-                        <div className="hidden md:block mt-12">
-                          <span className="text-[120px] display-font font-black text-muted/10 leading-none mb-8 block">{item.year}</span>
-                          <h4 className="text-4xl display-font font-bold mb-4">{item.title}</h4>
-                          <h5 className="text-2xl arabic-serif text-heritage-green mb-6" dir="rtl">{item.arabicTitle}</h5>
-                          <p className="text-lg text-muted-foreground font-light italic leading-relaxed max-w-md">"{item.desc}"</p>
-                        </div>
-                      )}
+                    <div className="absolute -top-12 -right-12 w-64 h-64 bg-heritage-gold/10 rounded-full blur-3xl opacity-50" />
+                    <div className="absolute -bottom-12 -left-12 w-80 h-80 bg-heritage-emerald/5 rounded-full blur-3xl opacity-50" />
+                    
+                    <div className="absolute top-20 -left-12 bg-white/90 p-8 rounded-full luxury-shadow gold-border flex flex-col items-center justify-center text-center z-20 backdrop-blur-md">
+                      <Award className="w-8 h-8 text-heritage-gold mb-2" />
+                      <span className="text-[10px] uppercase tracking-widest font-black text-dark-brown">PROGRESS</span>
+                      <span className="text-[9px] text-dark-brown/40">Heritage</span>
                     </div>
                   </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* National Treasury Section - Recipe 5: Brutalist / Creative Tool */}
-        <section className="py-32 md:py-60 bg-muted/10 relative overflow-hidden border-y border-border/40">
-          <div className="absolute inset-0 cultural-pattern opacity-[0.03]" />
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 md:mb-40 gap-16">
-              <div className="max-w-4xl">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="w-16 h-[1px] bg-heritage-gold" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-black text-heritage-gold">
-                    {t('treasury.tagline')} — {t('treasury.arabic_title')}
+                  <motion.div
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="order-1 lg:order-2"
+                  >
+                    <div className="flex items-center gap-4 mb-6 md:mb-8">
+                      <div className="w-8 md:w-12 h-[1px] bg-dark-brown" />
+                      <span className="text-[10px] md:text-[12px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-black text-dark-brown">{t('mission.tagline')}</span>
+                    </div>
+                    <h2 className="text-4xl md:text-8xl display-font font-bold mb-8 md:mb-10 leading-[1.1] tracking-tighter text-dark-brown">
+                      {t('mission.title')}
+                    </h2>
+                    <h3 className="text-3xl md:text-6xl arabic-serif text-dark-brown mb-8 md:mb-12 leading-relaxed" dir="rtl">{t('mission.arabic_title')}</h3>
+                    <button 
+                      onClick={() => setShowCharter(true)}
+                      className="w-full sm:w-auto px-10 md:px-12 py-5 md:py-6 bg-dark-brown text-heritage-beige rounded-2xl md:rounded-full text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-black hover:bg-heritage-emerald transition-all luxury-shadow group"
+                    >
+                      <span className="flex items-center gap-4">
+                        {t('mission.charter')}
+                        <ArrowRight className={`w-4 h-4 transition-transform group-hover:translate-x-2 ${isRTL ? 'rotate-180' : ''}`} />
+                      </span>
+                    </button>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Charter Modal */}
+              <AnimatePresence>
+                {showCharter && (
+                  <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-12">
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      onClick={() => setShowCharter(false)}
+                      className="absolute inset-0 bg-black/95 backdrop-blur-xl"
+                    />
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 30 }}
+                      className="relative w-full max-w-4xl bg-heritage-sand rounded-[40px] luxury-shadow border border-heritage-gold/20 overflow-y-auto max-h-[90vh] custom-scrollbar"
+                    >
+                      <div className="p-8 md:p-14 lg:p-20 relative">
+                        <div className="absolute inset-0 cultural-pattern opacity-[0.03] pointer-events-none" />
+                        
+                        <div className="flex justify-end mb-8 sticky top-0 z-30">
+                          <button 
+                            onClick={() => setShowCharter(false)}
+                            className="p-4 bg-dark-brown/5 hover:bg-dark-brown hover:text-white transition-all rounded-full luxury-shadow backdrop-blur-md border border-dark-brown/10"
+                          >
+                            <X className="w-6 h-6" />
+                          </button>
+                        </div>
+
+                        <div className="relative z-10">
+                          <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-[1px] bg-dark-brown" />
+                            <span className="text-[12px] uppercase tracking-[0.4em] font-black text-dark-brown">{t('mission.charter')}</span>
+                          </div>
+
+                          <h2 className="text-4xl md:text-6xl display-font font-bold mb-10 text-dark-brown tracking-tighter leading-tight">
+                            {t('mission.title')}
+                          </h2>
+
+                          <div className="space-y-8">
+                            <div className="text-xl md:text-3xl text-dark-brown leading-relaxed text-justify rtl:text-right whitespace-pre-line font-medium italic border-l-4 border-heritage-gold/30 pl-8">
+                              {t('mission.description')}
+                            </div>
+                          </div>
+
+                          <div className="mt-16 pt-10 border-t border-dark-brown/10 flex justify-between items-center text-[10px] uppercase font-black tracking-widest text-dark-brown/40">
+                             <span>Official National Charter</span>
+                             <span>MuseumDZ Archive v1.0</span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+              </AnimatePresence>
+            </section>
+
+            <HistoricalEras />
+
+            {/* National Museum Directory Registry Portal — Recipe 5: Brutalist / Data Grid */}
+            <section id="registry" className="py-24 md:py-60 relative overflow-hidden bg-heritage-beige">
+          <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-heritage-gold/[0.03] -skew-x-12 translate-x-1/2 pointer-events-none" />
+          <div className="max-w-[1800px] mx-auto px-6 md:px-12 relative z-10">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 md:mb-48 gap-12 lg:gap-20">
+              <div className="max-w-4xl w-full">
+                <div className="flex items-center gap-6 mb-10">
+                  <div className="w-12 md:w-16 h-[1px] bg-heritage-brown/40" />
+                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.3em] md:tracking-[0.6em] font-black text-dark-brown">
+                    {t('inventory.tagline')}
                   </span>
                 </div>
-                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9]">
-                  {t('treasury.title').split(' ').slice(0, 2).join(' ')} <br />
-                  <span className="text-heritage-green italic font-light">{t('treasury.title').split(' ').slice(2).join(' ')}</span>
+                <h2 className="text-5xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[1.1] md:leading-[0.9] text-dark-brown">
+                  {t('inventory.title').split(' ').slice(0, 1).join(' ')} <br /> 
+                  <span className="text-dark-brown italic font-black drop-shadow-sm">{t('inventory.title').split(' ').slice(1).join(' ')}</span>
                 </h2>
-                <h3 className="text-4xl md:text-7xl arabic-serif text-foreground/60 leading-tight" dir="rtl">{t('treasury.arabic_title')}</h3>
-              </div>
-              <div className="flex flex-col items-start lg:items-end max-w-md">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light italic mb-10 lg:text-right">
-                  "{t('treasury.description')}"
-                </p>
-                <div className="flex items-center gap-8 font-mono">
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-bold">{t('treasury.registry_count')}</span>
-                    <span className="text-3xl font-light tracking-tighter">048/124</span>
-                  </div>
-                  <div className="h-12 w-[1px] bg-border/60" />
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-bold">{t('treasury.last_updated')}</span>
-                    <span className="text-3xl font-light tracking-tighter">{t('treasury.month')}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <h3 className="text-4xl md:text-8xl arabic-serif text-dark-brown leading-tight mb-12" dir="rtl">{t('inventory.arabic_title')}</h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {allArtifacts.map((artifact, idx) => (
-                <motion.div
-                  key={artifact.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className={`relative group overflow-hidden luxury-shadow ${idx === 0 || idx === 3 ? 'md:col-span-2 md:row-span-2' : ''}`}
-                >
-                  <div className="aspect-[4/5] md:aspect-auto md:h-full relative">
-                    <img 
-                      src={artifact.imageUrl} 
-                      alt={artifact.name}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8 translate-y-10 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
-                      <div className="text-[10px] uppercase tracking-[0.3em] font-bold text-heritage-gold mb-2">{artifact.period}</div>
-                      <h4 className="text-2xl text-white display-font mb-2">{artifact.name}</h4>
-                      <h5 className="text-lg arabic-serif text-white/60 mb-6" dir="rtl">{artifact.arabicName}</h5>
-                      <button className="text-[10px] uppercase tracking-[0.4em] font-black text-white border-b border-white/40 pb-2 hover:border-heritage-gold hover:text-heritage-gold transition-all">
-                        {t('treasury.examine')}
+                {/* Advanced Filtering Engine */}
+                <div className="mt-16 md:mt-20 space-y-10 md:space-y-12 bg-white/60 backdrop-blur-3xl p-6 md:p-12 border border-heritage-gold/20 luxury-shadow relative overflow-hidden rounded-3xl">
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-heritage-gold/0 via-heritage-gold/50 to-heritage-gold/0" />
+                  
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10">
+                    <div className="flex items-center gap-4 w-full md:w-auto">
+                      <div className="p-3 md:p-4 bg-heritage-beige border border-heritage-gold/20 rounded-xl">
+                        <Filter className="w-5 h-5 text-heritage-gold" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg md:text-xl font-bold display-font tracking-tight text-heritage-brown">REGISTRY_ENGINE</h4>
+                        <p className="text-[9px] uppercase tracking-[0.1em] text-heritage-brown/40 font-black">Refine Search Parameters</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto justify-center md:justify-end">
+                      <button 
+                        onClick={() => setShowFavoritesOnly(false)}
+                        className={`flex-1 md:flex-none px-5 md:px-6 py-3 text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-black transition-all rounded-xl flex items-center justify-center gap-2 md:gap-3 ${!showFavoritesOnly ? 'bg-heritage-brown text-heritage-beige shadow-lg' : 'bg-heritage-gold/10 text-heritage-brown/60 hover:bg-heritage-gold/20'}`}
+                      >
+                        <Grid className="w-3.5 h-3.5" />
+                        {t('filters.all')}
+                      </button>
+                      <button 
+                        onClick={() => setShowFavoritesOnly(true)}
+                        className={`flex-1 md:flex-none px-5 md:px-6 py-3 text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-black transition-all rounded-xl flex items-center justify-center gap-2 md:gap-3 ${showFavoritesOnly ? 'bg-heritage-red text-heritage-beige shadow-lg' : 'bg-heritage-gold/10 text-heritage-brown/60 hover:bg-heritage-gold/20'}`}
+                      >
+                        <Heart className={`w-3.5 h-3.5 ${showFavoritesOnly ? 'fill-white' : ''}`} />
+                        {t('nav.favorites')}
+                        <span className="ml-1 opacity-60">[{favorites.length}]</span>
                       </button>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
-        {/* Heritage Spotlight Section - Recipe 9: Oversized Typographic */}
-        <section className="py-32 md:py-60 relative overflow-hidden bg-background">
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-              <div className="lg:col-span-7 relative">
-                <div className="absolute -top-24 -left-12 text-[180px] md:text-[320px] font-black text-muted/10 display-font leading-none select-none pointer-events-none">
-                  {t('spotlight.year')}
-                </div>
-                <motion.div
-                  initial={{ opacity: 0, x: -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative z-10"
-                >
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-[1px] bg-heritage-red" />
-                    <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-red">
-                      {t('spotlight.tagline')} — {t('spotlight.arabic_title')}
-                    </span>
-                  </div>
-                  <h2 className="text-5xl md:text-9xl display-font font-bold mb-8 tracking-tighter leading-[0.9]">
-                    {t('spotlight.title').split(' ').slice(0, 2).join(' ')} <br />
-                    <span className="text-heritage-green">{t('spotlight.title').split(' ').slice(2).join(' ')}</span>
-                  </h2>
-                  <h3 className="text-4xl md:text-6xl arabic-serif text-foreground/80 mb-12" dir="rtl">{t('spotlight.arabic_title')}</h3>
-                  <p className="text-lg md:text-2xl text-muted-foreground max-w-2xl leading-relaxed font-light italic mb-12">
-                    "{t('spotlight.description')}"
-                  </p>
-                  <button className="group flex items-center gap-6 px-10 py-5 bg-foreground text-background text-[11px] uppercase tracking-[0.4em] font-bold hover:bg-heritage-green hover:text-white transition-all">
-                    {t('spotlight.cta')} <ArrowRight className="w-5 h-5 group-hover:translate-x-3 transition-transform" />
-                  </button>
-                </motion.div>
-              </div>
-              <div className="lg:col-span-5 relative">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  className="aspect-[3/4] relative overflow-hidden luxury-shadow group"
-                >
-                  <img 
-                    src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&q=80&w=1200" 
-                    alt={t('spotlight.maqam')}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-10 left-10 right-10">
-                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-heritage-gold mb-2 block">{t('spotlight.featured')}</span>
-                    <h4 className="text-2xl text-white display-font">{t('spotlight.maqam')}</h4>
-                  </div>
-                </motion.div>
-                {/* Floating Detail Card */}
-                <div className="absolute -bottom-12 -left-12 bg-card p-10 border border-border/60 luxury-shadow hidden xl:block max-w-xs">
-                  <div className="flex items-center gap-3 mb-4">
-                    <ShieldCheck className="w-5 h-5 text-heritage-green" />
-                    <span className="text-[10px] uppercase tracking-widest font-black">{t('spotlight.verified')}</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed font-medium">
-                    {t('spotlight.mujahid_desc')}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Heritage Highlights Section - Recipe 5: Brutalist / Creative Tool */}
-        <section className="py-32 md:py-60 bg-muted/10 relative overflow-hidden border-y border-border/40">
-          <div className="absolute inset-0 cultural-pattern opacity-[0.03]" />
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 md:mb-40 gap-16">
-              <div className="max-w-4xl">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="w-16 h-[1px] bg-heritage-gold" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-black text-heritage-gold">
-                    {t('treasury.tagline')} — {t('treasury.arabic_title')}
-                  </span>
-                </div>
-                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9]">
-                  {t('treasury.title').split(' ').slice(0, 2).join(' ')} <br />
-                  <span className="text-heritage-green italic font-light">{t('treasury.title').split(' ').slice(2).join(' ')}</span>
-                </h2>
-                <h3 className="text-4xl md:text-7xl arabic-serif text-foreground/60 leading-tight" dir="rtl">{t('treasury.arabic_title')}</h3>
-              </div>
-              <div className="flex flex-col items-start lg:items-end max-w-md">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light italic mb-10 lg:text-right">
-                  "{t('treasury.description')}"
-                </p>
-                <div className="flex items-center gap-8 font-mono">
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-bold">{t('treasury.registry_count')}</span>
-                    <span className="text-3xl font-light tracking-tighter">048/124</span>
-                  </div>
-                  <div className="h-12 w-[1px] bg-border/60" />
-                  <div className="flex flex-col items-end">
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 font-bold">{t('treasury.last_updated')}</span>
-                    <span className="text-3xl font-light tracking-tighter">{t('treasury.month')}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-              {allArtifacts.slice(0, 3).map((artifact, index) => (
-                <motion.div
-                  key={artifact.id}
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 1, ease: "easeOut" }}
-                  className={`${
-                    index === 0 ? 'md:col-span-7 aspect-[16/10]' : 
-                    index === 1 ? 'md:col-span-5 aspect-[4/5]' : 
-                    'md:col-span-12 aspect-[21/9]'
-                  } group relative overflow-hidden border border-border/60 luxury-shadow bg-card`}
-                >
-                  <img 
-                    src={artifact.imageUrl} 
-                    alt={artifact.name}
-                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1 grayscale-[0.2] group-hover:grayscale-0"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-700" />
-                  
-                  <div className="absolute inset-0 p-12 flex flex-col justify-end translate-y-12 group-hover:translate-y-0 transition-all duration-700">
-                    <div className="flex items-center gap-4 mb-6 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                      <div className="w-12 h-[1px] bg-heritage-gold" />
-                      <span className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-gold">{isRTL ? artifact.arabicPeriod : artifact.period}</span>
-                    </div>
-                    <h4 className="text-4xl md:text-6xl text-white display-font mb-3 tracking-tighter leading-none">{isRTL ? artifact.arabicName : artifact.name}</h4>
-                    <h5 className="text-3xl md:text-4xl text-white/70 arabic-serif mb-8" dir="rtl">{artifact.arabicName}</h5>
-                    <p className="text-base md:text-xl text-white/50 max-w-2xl line-clamp-2 mb-12 opacity-0 group-hover:opacity-100 transition-opacity delay-200 leading-relaxed font-light italic">
-                      "{isRTL ? artifact.arabicDescription : artifact.description}"
-                    </p>
-                    <button className="flex items-center gap-6 pt-10 border-t border-white/10 group/btn w-fit">
-                      <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center group-hover/btn:bg-heritage-gold transition-all duration-500 scale-90 group-hover/btn:scale-100">
-                        <ArrowRight className="w-6 h-6 text-white transition-transform group-hover/btn:translate-x-2" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    {/* Category Filter */}
+                    <div className="space-y-3 md:space-y-4">
+                      <label className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-black text-heritage-brown/40 px-2">{t('filters.category')}</label>
+                      <div className="relative group">
+                        <select 
+                          value={categoryFilter}
+                          onChange={(e) => setCategoryFilter(e.target.value)}
+                          className="w-full bg-heritage-beige border border-heritage-gold/20 p-4 md:p-5 rounded-2xl text-xs md:text-sm font-bold tracking-tight text-heritage-brown focus:outline-none focus:border-heritage-gold/50 transition-colors appearance-none cursor-pointer"
+                        >
+                          {categories.map(c => (
+                            <option key={c} value={c} className="bg-heritage-beige">{c === 'All' ? t('filters.all') : t(`hero.${c.toLowerCase().replace(' ', '_')}`)}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-heritage-gold/50 group-hover:text-heritage-gold transition-colors pointer-events-none" />
                       </div>
-                      <span className="text-[11px] uppercase tracking-[0.4em] font-black text-white/60 group-hover/btn:text-white transition-colors">{t('treasury.examine')}</span>
-                    </button>
-                  </div>
-                  
-                  {/* Brutalist Numbering */}
-                  <div className="absolute top-10 left-10 text-white/10 text-8xl font-black display-font leading-none select-none pointer-events-none group-hover:text-heritage-green/20 transition-colors duration-700">
-                    0{index + 1}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+                    </div>
 
-        <section id="inventory" className="py-32 md:py-60 relative overflow-hidden bg-background">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-secondary/5 -skew-x-12 translate-x-1/2 pointer-events-none" />
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-32 md:mb-48 gap-20">
-              <div className="max-w-4xl">
-                <div className="flex items-center gap-6 mb-10">
-                  <div className="w-16 h-[1px] bg-heritage-green" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-black text-heritage-green">
-                    {t('inventory.tagline')} — {t('inventory.arabic_title')}
-                  </span>
+                    {/* Wilaya Filter */}
+                    <div className="space-y-3 md:space-y-4">
+                      <label className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-black text-heritage-brown/40 px-2">{t('filters.wilaya')}</label>
+                      <div className="relative group">
+                        <select 
+                          value={wilayaFilter}
+                          onChange={(e) => setWilayaFilter(e.target.value)}
+                          className="w-full bg-heritage-beige border border-heritage-gold/20 p-4 md:p-5 rounded-2xl text-xs md:text-sm font-bold tracking-tight text-heritage-brown focus:outline-none focus:border-heritage-gold/50 transition-colors appearance-none cursor-pointer"
+                        >
+                          {availableWilayas.map(w => (
+                            <option key={w} value={w} className="bg-heritage-beige">{w === 'All' ? t('filters.all') : w}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-heritage-gold/50 group-hover:text-heritage-gold transition-colors pointer-events-none" />
+                      </div>
+                    </div>
+
+                    {/* Era Filter */}
+                    <div className="space-y-3 md:space-y-4">
+                      <label className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-black text-heritage-brown/40 px-2">{t('filters.era')}</label>
+                      <div className="relative group">
+                        <select 
+                          value={eraFilter}
+                          onChange={(e) => setEraFilter(e.target.value)}
+                          className="w-full bg-heritage-beige border border-heritage-gold/20 p-4 md:p-5 rounded-2xl text-xs md:text-sm font-bold tracking-tight text-heritage-brown focus:outline-none focus:border-heritage-gold/50 transition-colors appearance-none cursor-pointer"
+                        >
+                          {availableEras.map(e => (
+                            <option key={e} value={e} className="bg-heritage-beige">{e === 'All' ? t('filters.all') : e}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-heritage-gold/50 group-hover:text-heritage-gold transition-colors pointer-events-none" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9]">{t('inventory.title').split(' ').slice(0, 1).join(' ')} <br /> <span className="text-heritage-green italic font-light">{t('inventory.title').split(' ').slice(1).join(' ')}</span></h2>
-                <h3 className="text-4xl md:text-7xl arabic-serif text-foreground/60 leading-tight" dir="rtl">{t('inventory.arabic_title')}</h3>
+
+                <div className="mt-16 md:mt-20 p-8 md:p-10 bg-white/40 border-l-4 border-heritage-gold max-w-2xl luxury-shadow rounded-r-2xl">
+                  <p className="text-xl md:text-2xl text-heritage-brown font-light italic leading-relaxed">
+                    "{t('footer.tagline')}"
+                  </p>
+                </div>
+
+                {/* Regional Summary — Recipe 1: Technical Grid */}
+                <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+                  {[
+                    { id: 'north', count: 6, label: 'Algiers', ar: 'العاصمة' },
+                    { id: 'east', count: 10, label: 'East', ar: 'الشرق' },
+                    { id: 'west', count: 5, label: 'West', ar: 'الغرب' },
+                    { id: 'south', count: 2, label: 'South', ar: 'الجنوب' }
+                  ].map((region) => (
+                    <div key={region.id} className="p-6 border border-border/40 bg-card luxury-shadow flex flex-col gap-4 group hover:border-heritage-gold transition-colors">
+                      <div className="flex justify-between items-start">
+                        <span className="text-[10px] uppercase tracking-widest font-black text-muted-foreground/40">{region.id}</span>
+                        <div className="w-2 h-2 rounded-full bg-heritage-gold animate-pulse" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-black display-font text-black">{region.count}</div>
+                        <div className="text-[10px] uppercase tracking-[0.2em] font-black text-dark-brown">{t(`dashboard.${region.id === 'north' ? 'wilayas' : 'wilayas'}`)}</div>
+                      </div>
+                      <div className="pt-4 border-t border-border/20">
+                        <div className="text-sm font-black text-dark-brown">{region.label}</div>
+                        <div className="text-xs arabic-serif text-black font-bold" dir="rtl">{region.ar}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="flex flex-col items-start lg:items-end">
                 <div className="flex items-baseline gap-6 mb-6">
-                  <span className="text-7xl md:text-[10rem] display-font font-light tracking-tighter text-heritage-green leading-none">{filteredMuseums.length}</span>
-                  <span className="text-3xl md:text-5xl display-font font-light text-muted-foreground/40">/ 124</span>
+                  <span className="text-7xl md:text-[10rem] display-font font-black tracking-tighter text-black leading-none">{filteredMuseums.length}</span>
+                  <span className="text-3xl md:text-5xl display-font font-black text-dark-brown/40">/ 124</span>
                 </div>
                 <div className="flex items-center gap-4 text-[11px] uppercase tracking-[0.4em] font-black text-muted-foreground/60">
-                  <div className="w-2 h-2 rounded-full bg-heritage-green animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-heritage-brown animate-pulse" />
                   {t('inventory.active_records')} — {t('inventory.active')}
                 </div>
               </div>
@@ -591,9 +466,9 @@ export default function App() {
                 <p className="text-base md:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">{t('inventory.no_matching_desc')}</p>
                 <button 
                   onClick={() => { setSearchQuery(''); setCategoryFilter('All'); }}
-                  className="mt-12 group flex items-center gap-4 mx-auto text-[11px] uppercase tracking-[0.4em] text-heritage-gold font-black hover:text-heritage-green transition-colors"
+                  className="mt-12 group flex items-center gap-4 mx-auto text-[11px] uppercase tracking-[0.4em] text-heritage-gold font-black hover:text-heritage-brown transition-colors"
                 >
-                  <div className="w-8 h-[1px] bg-heritage-gold group-hover:bg-heritage-green transition-colors" />
+                  <div className="w-8 h-[1px] bg-heritage-gold group-hover:bg-heritage-brown transition-colors" />
                   {t('inventory.reset')}
                 </button>
               </div>
@@ -601,330 +476,13 @@ export default function App() {
           </div>
         </section>
 
-        {/* Mission Section - Recipe 6: Warm Organic / Cultural */}
-        <section className="py-32 md:py-60 bg-[#fbfaf8] dark:bg-muted/5 relative overflow-hidden transition-colors duration-500">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                <div className="aspect-[3/4] rounded-[120px] overflow-hidden luxury-shadow relative z-10">
-                    <img 
-                      src="https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?auto=format&fit=crop&q=80&w=1200" 
-                      alt="Cultural Preservation"
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                </div>
-                <div className="absolute -top-12 -right-12 w-64 h-64 bg-heritage-gold/10 rounded-full blur-3xl" />
-                <div className="absolute -bottom-12 -left-12 w-80 h-80 bg-heritage-green/5 rounded-full blur-3xl" />
-                
-                {/* Organic Badge */}
-                <div className="absolute top-20 -left-12 bg-white dark:bg-muted p-8 rounded-full luxury-shadow border border-heritage-gold/20 flex flex-col items-center justify-center text-center z-20">
-                  <Award className="w-8 h-8 text-heritage-gold mb-2" />
-                  <span className="text-[10px] uppercase tracking-widest font-black dark:text-foreground/80">UNESCO</span>
-                  <span className="text-[9px] text-muted-foreground">Partner</span>
-                </div>
-              </motion.div>
+            {/* Secondary mission, Map duplicate and Newsletter duplicates removed below */}
 
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-[1px] bg-heritage-green" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-green">{t('mission.tagline')} — {t('mission.arabic_title')}</span>
-                </div>
-                <h2 className="text-5xl md:text-7xl display-font font-bold mb-10 leading-[1.1] tracking-tighter">
-                  {t('mission.soul').split(' ').slice(0, 2).join(' ')} <br />
-                  <span className="text-heritage-green italic font-light">{t('mission.soul').split(' ').slice(2).join(' ')}</span>
-                </h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-foreground/60 mb-12" dir="rtl">{t('mission.soul_desc').split('.')[0]}</h3>
-                <div className="space-y-8 mb-16">
-                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light italic">
-                    "{t('mission.soul_desc')}"
-                  </p>
-                  <div className="grid grid-cols-2 gap-8">
-                    <div className="p-6 bg-white border border-heritage-gold/10 rounded-3xl">
-                      <h4 className="text-2xl display-font font-bold mb-2">{t('mission.education')}</h4>
-                      <p className="text-xs text-muted-foreground">{t('mission.education_desc')}</p>
-                    </div>
-                    <div className="p-6 bg-white border border-heritage-gold/10 rounded-3xl">
-                      <h4 className="text-2xl display-font font-bold mb-2">{t('mission.research')}</h4>
-                      <p className="text-xs text-muted-foreground">{t('mission.research_desc')}</p>
-                    </div>
-                  </div>
-                </div>
-                <button className="px-12 py-6 bg-heritage-green text-white rounded-full text-[11px] uppercase tracking-[0.4em] font-black hover:bg-heritage-green/90 transition-all luxury-shadow">
-                  {t('mission.charter')}
-                </button>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Cultural Map Section - Recipe 7: Atmospheric / Immersive Media */}
-        <section className="py-32 md:py-60 relative overflow-hidden bg-black text-white">
-          <div className="absolute inset-0 atmosphere opacity-40 pointer-events-none" />
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="flex flex-col items-center text-center mb-24 md:mb-40">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-[1px] bg-heritage-gold" />
-                <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-gold">{t('atlas.tagline')} — {t('atlas.arabic_title')}</span>
-                <div className="w-12 h-[1px] bg-heritage-gold" />
-              </div>
-              <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9]">{t('atlas.title').split(' ').slice(0, 2).join(' ')} <br /> <span className="text-heritage-green italic font-light">{t('atlas.title').split(' ').slice(2).join(' ')}</span></h2>
-              <h3 className="text-4xl md:text-7xl arabic-serif text-white/40" dir="rtl">{t('atlas.arabic_title')}</h3>
-            </div>
-
-            <div className="relative aspect-[21/9] rounded-[40px] overflow-hidden border border-white/10 group">
-              <img 
-                src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2000" 
-                alt={t('atlas.title')}
-                className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-[10s]"
-                referrerPolicy="no-referrer"
-              />
-              
-              {/* Monitoring HUD */}
-              <div className="absolute inset-0 p-12 md:p-20 flex flex-col justify-between">
-                <div className="flex justify-between items-start">
-                  <div className="flex flex-col gap-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-3 h-3 rounded-full bg-heritage-green animate-ping" />
-                      <span className="text-[10px] uppercase tracking-[0.4em] font-black">{t('atlas.system_active')}</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono">
-                      {museums.slice(0, 4).map((m) => (
-                        <div key={m.id} className="flex flex-col gap-1">
-                          <span className="text-[8px] text-white/40 uppercase tracking-widest truncate max-w-[120px]">{isRTL ? m.arabicName : m.name}</span>
-                          <span className="text-[10px] text-heritage-gold">{m.location.lat.toFixed(4)}°N / {m.location.lng.toFixed(4)}°E</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="hidden md:flex flex-col items-end gap-2 font-mono text-[10px] text-white/40">
-                    <div>{t('atlas.lat')}: 28.0339° N</div>
-                    <div>{t('atlas.lng')}: 1.6596° E</div>
-                    <div>{t('atlas.alt')}: 1,041m</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-end justify-between gap-12">
-                  <div className="max-w-xl text-left">
-                    <p className="text-xl md:text-3xl font-light italic text-white/80 leading-relaxed mb-10">
-                      "{t('atlas.description')}"
-                    </p>
-                    <div className="flex gap-6">
-                      <button className="px-10 py-5 bg-white text-black text-[10px] uppercase tracking-[0.4em] font-black hover:bg-heritage-green hover:text-white transition-all">
-                        {t('atlas.cta')}
-                      </button>
-                      <button className="px-10 py-5 border border-white/20 text-white text-[10px] uppercase tracking-[0.4em] font-black hover:bg-white/10 transition-all">
-                        {t('atlas.status')}: {t('atlas.nominal')}
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-end gap-6">
-                    <div className="flex items-center gap-4">
-                      <div className="flex flex-col items-end">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-white/40">ACTIVE_NODES</span>
-                        <span className="text-2xl font-bold">48.00</span>
-                      </div>
-                      <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center">
-                        <Globe className="w-5 h-5 text-heritage-green" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Newsletter Section - Recipe 11: SaaS Landing / Split Layout */}
-        <section className="relative overflow-hidden border-t border-border/40">
-          <div className="grid grid-cols-1 lg:grid-cols-2 h-[600px]">
-            <div className="bg-black text-white p-16 md:p-24 flex flex-col justify-center relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-full cultural-pattern opacity-[0.05] pointer-events-none" />
-              <div className="relative z-10">
-                <h2 className="text-5xl md:text-8xl display-font font-bold mb-8 tracking-tighter leading-[0.85]">{t('newsletter.title').split(' ').slice(0, 2).join(' ')} <br /> <span className="text-heritage-green italic font-light">{t('newsletter.title').split(' ').slice(2).join(' ')}</span></h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-white/60 mb-12" dir="rtl">{t('newsletter.arabic_title')}</h3>
-                <p className="text-lg text-white/40 max-w-md mb-12 font-light italic">
-                  "{t('newsletter.description')}"
-                </p>
-                <div className="flex gap-4 max-w-md">
-                  <input 
-                    type="email" 
-                    placeholder={t('newsletter.placeholder')} 
-                    className="flex-1 bg-white/10 border border-white/20 px-8 py-5 text-white text-[11px] uppercase tracking-widest outline-none focus:border-heritage-green transition-colors"
-                  />
-                  <button className="bg-heritage-green text-white px-10 py-5 text-[11px] uppercase tracking-[0.4em] font-black hover:bg-heritage-green/90 transition-all">
-                    {t('newsletter.subscribe')}
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="relative overflow-hidden bg-muted/20">
-              <img 
-                src="https://images.unsplash.com/photo-1518998053502-53cc8efd9abc?auto=format&fit=crop&q=80&w=1200" 
-                alt="Museum Interior"
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-heritage-green/10 mix-blend-multiply" />
-              
-              {/* Floating Element */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center rotate-12">
-                <div className="text-center">
-                  <div className="text-4xl font-bold display-font text-white mb-2">{t('newsletter.subscribers_count')}</div>
-                  <div className="text-[9px] uppercase tracking-widest font-black text-white/60">{t('newsletter.subscribers')}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Cultural Map (Atlas) - Recipe 7: Atmospheric / Immersive Media */}
-        <section className="py-32 md:py-60 bg-black text-white relative overflow-hidden">
-          <div className="absolute inset-0 atmosphere opacity-20 pointer-events-none" />
-          <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-              <div>
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="w-16 h-[1px] bg-heritage-green" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.6em] font-black text-heritage-green">
-                    {t('atlas.tagline')} — {t('atlas.arabic_title')}
-                  </span>
-                </div>
-                <h2 className="text-6xl md:text-[10rem] display-font font-bold mb-8 tracking-tighter leading-[0.9] text-white">
-                  {t('atlas.title').split(' ').slice(0, 1).join(' ')} <br />
-                  <span className="text-heritage-green italic font-light">{t('atlas.title').split(' ').slice(1).join(' ')}</span>
-                </h2>
-                <h3 className="text-4xl md:text-7xl arabic-serif text-white/40 leading-tight mb-16" dir="rtl">{t('atlas.arabic_title')}</h3>
-                
-                {/* Monitoring HUD */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-                  {[
-                    { label: t('atlas.lat'), value: '36.7538° N' },
-                    { label: t('atlas.lng'), value: '3.0588° E' },
-                    { label: t('atlas.alt'), value: '124m' },
-                    { label: t('atlas.status'), value: t('atlas.nominal'), color: 'text-heritage-green' }
-                  ].map((stat) => (
-                    <div key={stat.label} className="flex flex-col border-l border-white/10 pl-6">
-                      <span className="text-[10px] uppercase tracking-widest font-black text-white/40 mb-2">{stat.label}</span>
-                      <span className={`text-xl font-mono tracking-tighter ${stat.color || 'text-white'}`}>{stat.value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <button className="group flex items-center gap-6 px-10 py-5 bg-heritage-green text-white text-[11px] uppercase tracking-[0.4em] font-bold hover:bg-white hover:text-foreground transition-all">
-                  {t('atlas.cta')} <Compass className="w-5 h-5 group-hover:rotate-180 transition-transform duration-700" />
-                </button>
-              </div>
-
-              <div className="relative">
-                <div className="aspect-square rounded-full border border-background/10 relative p-12 md:p-24 flex items-center justify-center">
-                  <div className="absolute inset-0 border border-background/5 rounded-full animate-[spin_20s_linear_infinite]" />
-                  <div className="absolute inset-12 border border-heritage-green/20 rounded-full animate-[spin_30s_linear_infinite_reverse]" />
-                  
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className="relative z-10 w-full h-full rounded-full overflow-hidden luxury-shadow border-4 border-background/10"
-                  >
-                    <img 
-                      src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=1200" 
-                      alt="Algeria Map View"
-                      className="w-full h-full object-cover grayscale opacity-60"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-heritage-green/10 mix-blend-overlay" />
-                    
-                    {/* Pulsing Location Markers */}
-                    {[
-                      { top: '20%', left: '40%', name: 'Algiers' },
-                      { top: '35%', left: '65%', name: 'Constantine' },
-                      { top: '45%', left: '25%', name: 'Oran' },
-                      { top: '75%', left: '55%', name: 'Tassili' }
-                    ].map((loc) => (
-                      <div key={loc.name} className="absolute" style={{ top: loc.top, left: loc.left }}>
-                        <div className="w-3 h-3 bg-heritage-green rounded-full animate-ping absolute inset-0" />
-                        <div className="w-3 h-3 bg-heritage-green rounded-full relative z-10" />
-                        <div className="absolute top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] uppercase tracking-widest font-black text-white/60">
-                          {loc.name}
-                        </div>
-                      </div>
-                    ))}
-                  </motion.div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Dashboard />
-
-        {/* Newsletter Section - Recipe 11: SaaS Split Layout */}
-        <section className="bg-background border-t border-border/40">
-          <div className="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-2">
-            <div className="p-12 md:p-32 border-b lg:border-b-0 lg:border-r border-border/40 relative overflow-hidden group">
-              <div className="absolute inset-0 cultural-pattern opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="w-12 h-[1px] bg-heritage-green" />
-                  <span className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-black text-heritage-green">
-                    {t('newsletter.tagline')} — {t('newsletter.arabic_title')}
-                  </span>
-                </div>
-                <h2 className="text-5xl md:text-8xl display-font font-bold mb-8 tracking-tighter leading-[0.9]">
-                  {t('newsletter.title').split(' ').slice(0, 2).join(' ')} <br />
-                  <span className="text-heritage-green italic font-light">{t('newsletter.title').split(' ').slice(2).join(' ')}</span>
-                </h2>
-                <h3 className="text-3xl md:text-5xl arabic-serif text-foreground/40 mb-12" dir="rtl">{t('newsletter.arabic_title')}</h3>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-light italic mb-12 max-w-md">
-                  "{t('newsletter.description')}"
-                </p>
-                <div className="flex items-center gap-8">
-                  <div className="flex -space-x-4">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-12 h-12 rounded-full border-4 border-background overflow-hidden">
-                        <img src={`https://i.pravatar.cc/150?u=${i}`} alt="User" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xl font-bold tracking-tighter">{t('newsletter.subscribers_count')}</span>
-                    <span className="text-[10px] uppercase tracking-widest font-black text-muted-foreground/60">{t('newsletter.subscribers')}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-12 md:p-32 flex flex-col justify-center bg-muted/5">
-              <div className="max-w-md w-full">
-                <div className="relative mb-8">
-                  <input 
-                    type="email" 
-                    placeholder={t('newsletter.placeholder')}
-                    className="w-full bg-transparent border-b-2 border-border/60 py-6 text-2xl md:text-3xl font-light focus:outline-none focus:border-heritage-green transition-colors placeholder:text-muted-foreground/20"
-                  />
-                  <button className="absolute right-0 bottom-6 group">
-                    <Send className="w-8 h-8 text-muted-foreground group-hover:text-heritage-green group-hover:-translate-y-2 group-hover:translate-x-2 transition-all" />
-                  </button>
-                </div>
-                <p className="text-[10px] uppercase tracking-widest font-black text-muted-foreground/40 leading-relaxed">
-                  {t('newsletter.privacy_notice')}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+            <Dashboard />
       </main>
-      <Footer />
+      <Footer onOpenLegal={() => setIsLegalOpen(true)} />
+      <HeritageGuide />
+      <LegalModal isOpen={isLegalOpen} onClose={() => setIsLegalOpen(false)} />
     </motion.div>
     )}
     </AnimatePresence>
