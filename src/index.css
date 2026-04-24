@@ -10,18 +10,18 @@
   --color-heritage-brown: #3E2723;
   --color-heritage-red: #B71C1C;
   --color-heritage-gold: #C5A059;
-  --color-heritage-beige: #FDFBF7;
-  --color-heritage-sand: #EFEDE6;
+  --color-heritage-beige: #E2D1C2;
+  --color-heritage-sand: #d4c0ae;
   --color-heritage-emerald: #065F46;
   --color-dark-brown: #2D1810;
   
-  --color-background: #FDFBF7;
+  --color-background: #E2D1C2;
   --color-foreground: #2D1810;
-  --color-card: #FDFBF7;
+  --color-card: #E2D1C2;
   --color-card-foreground: #2D1810;
-  --color-muted: #EFEDE6;
-  --color-muted-foreground: #8D6E63;
-  --color-border: rgba(45, 24, 16, 0.1);
+  --color-muted: #d4c0ae;
+  --color-muted-foreground: #2D1810;
+  --color-border: rgba(45, 24, 16, 0.2);
   
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
@@ -30,29 +30,29 @@
 
 @layer base {
   :root {
-    --background: 40 30% 98%; /* Soft Beige #FDFBF7 */
+    --background: 31 37% 65%; /* #c5a787 */
     --foreground: 12 40% 10%; /* Dark Brown #2D1810 */
-    --card: 40 30% 96%;
+    --card: 31 37% 62%;
     --card-foreground: 12 40% 10%;
-    --popover: 40 30% 96%;
+    --popover: 31 37% 62%;
     --popover-foreground: 12 40% 10%;
     --primary: 12 40% 10%;
-    --primary-foreground: 40 30% 98%;
-    --secondary: 40 20% 90%;
+    --primary-foreground: 31 37% 98%;
+    --secondary: 31 30% 55%;
     --secondary-foreground: 12 40% 10%;
-    --muted: 40 20% 90%;
-    --muted-foreground: 12 40% 15%; /* Darker for better legibility */
+    --muted: 31 30% 60%;
+    --muted-foreground: 12 40% 15%; 
     --accent: 45 60% 45%; /* Gold Accent */
-    --accent-foreground: 40 30% 98%;
+    --accent-foreground: 31 37% 98%;
     --destructive: 0 84% 60%;
-    --border: 12 20% 85%;
-    --input: 12 20% 85%;
+    --border: 12 20% 40%;
+    --input: 12 20% 40%;
     --ring: 45 60% 45%;
-    --chart-grid: #E0E0E0;
-    --chart-tooltip-bg: #FDFBF7;
+    --chart-grid: rgba(45, 24, 16, 0.1);
+    --chart-tooltip-bg: #c5a787;
     --chart-tooltip-border: #C5A059;
-    --body-bg: #FDFBF7;
-    --sand-bg: #EFEDE6;
+    --body-bg: #E2D1C2;
+    --sand-bg: #d4c0ae;
   }
 }
 

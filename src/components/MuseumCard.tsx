@@ -160,16 +160,16 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
           </div>
         </div>
 
-        <div className="p-8 md:p-10 flex-1 flex flex-col bg-white relative cursor-pointer" onClick={() => setShowMuseumDetails(true)}>
+        <div className="p-8 md:p-10 flex-1 flex flex-col bg-heritage-beige relative cursor-pointer" onClick={() => setShowMuseumDetails(true)}>
           <div className="absolute inset-0 cultural-pattern opacity-[0.02] pointer-events-none" />
           
           <div className="relative z-10">
             <div className="flex justify-between items-start mb-8">
               <h4 className="text-3xl md:text-5xl arabic-serif text-dark-brown font-medium leading-tight">
-                {language === 'ar' ? museum.name : museum.arabicName}
+                {language === 'ar' ? museum.arabicName : museum.name}
               </h4>
               <div className="flex flex-col items-end pt-2">
-                <span className="text-[11px] arabic-font font-black text-dark-brown">{language === 'ar' ? museum.wilaya : museum.arabicWilaya}</span>
+                <span className="text-[11px] arabic-font font-black text-dark-brown">{language === 'ar' ? museum.arabicWilaya : museum.wilaya}</span>
                 <span className="text-[9px] uppercase tracking-[0.2em] text-dark-brown font-black mt-1">{t('museum.region')} 0{Math.floor(Math.random() * 9) + 1}</span>
               </div>
             </div>
@@ -245,7 +245,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
                         referrerPolicy="no-referrer"
                       />
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/artifact:opacity-100 transition-opacity">
-                        <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-full bg-heritage-beige/90 flex items-center justify-center">
                           <ImageIcon className="w-4 h-4 text-heritage-gold" />
                         </div>
                       </div>
@@ -400,7 +400,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
                     <div className="bg-muted/30 border border-border/40 rounded-3xl p-10 space-y-10 luxury-shadow">
                       <div className="space-y-4">
                         <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-dark-brown">{t('museum.verified_archive')}</h4>
-                        <div className="p-6 bg-white rounded-2xl border border-heritage-gold/20 flex flex-col gap-2">
+                        <div className="p-6 bg-heritage-beige rounded-2xl border border-heritage-gold/20 flex flex-col gap-2">
                           <span className="text-[9px] font-mono text-dark-brown">INSTITUTIONAL_RECORD_HASH</span>
                           <span className="text-lg font-mono font-bold tracking-tighter text-dark-brown">MDZ_{museum.id}_AUTH_2026</span>
                         </div>
@@ -661,7 +661,7 @@ export const MuseumCard: React.FC<MuseumCardProps> = ({ museum }) => {
                     </div>
                     
                     <h2 className="text-4xl md:text-6xl display-font font-black mb-4 tracking-tighter leading-tight text-[#2D1810]">{getLocalizedName(selectedArtifact)}</h2>
-                    <h3 className="text-3xl md:text-4xl arabic-serif text-heritage-gold mb-8 font-black" dir={isRTL ? 'rtl' : 'ltr'}>{language === 'ar' ? selectedArtifact.name : selectedArtifact.arabicName}</h3>
+                    <h3 className="text-3xl md:text-4xl arabic-serif text-heritage-gold mb-8 font-black" dir={isRTL ? 'rtl' : 'ltr'}>{language === 'ar' ? selectedArtifact.arabicName : selectedArtifact.name}</h3>
                     
                     <div className="space-y-8 mb-12">
                       <p className="text-[#2D1810] leading-relaxed text-lg md:text-xl font-bold italic border-l-2 border-heritage-gold/20 pl-6">

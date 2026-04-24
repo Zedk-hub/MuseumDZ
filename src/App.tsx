@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { MuseumCard } from './components/MuseumCard';
@@ -8,7 +8,7 @@ import { HeritageGuide } from './components/HeritageGuide';
 import { LegalModal } from './components/LegalModal';
 import { museums } from './data/museums';
 import { motion, AnimatePresence } from 'motion/react';
-import { Landmark, Info, Mail, Phone, MapPin, Facebook, Twitter, Instagram, ExternalLink, ArrowRight, ShieldCheck, Globe, ScrollText, Award, Compass, Send, X } from 'lucide-react';
+import { Landmark, Info, Mail, Phone, MapPin, Facebook, Twitter, Instagram, ExternalLink, ArrowRight, ShieldCheck, Globe, ScrollText, Award, Compass, Send, X, Languages } from 'lucide-react';
 import { useLanguage } from './lib/LanguageContext';
 import { useFavorites } from './lib/FavoritesContext';
 import { Filter, Bookmark, Grid, Heart, ChevronDown } from 'lucide-react';
@@ -25,17 +25,21 @@ const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
       <div className="max-w-[1800px] mx-auto px-8 md:px-12 relative z-10 text-center md:text-left">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 md:gap-32 mb-24 md:mb-32">
           <div className="lg:col-span-6 flex flex-col items-center md:items-start text-center md:text-left">
-                <div className="flex justify-between items-start mb-8 md:mb-12">
-                  <div className="flex items-center gap-4 md:gap-6">
-                    <div className="w-12 h-12 bg-white flex items-center justify-center rounded-full border border-heritage-gold/30 shadow-2xl">
-                      <Landmark className="text-dark-brown w-6 h-6" />
-                    </div>
-                    <span className="text-xl md:text-3xl display-font font-bold tracking-tighter uppercase text-heritage-beige/90">{t('hero.subtitle')}</span>
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 md:mb-12">
+                  <div className="w-16 h-16 md:w-24 md:h-24 bg-heritage-beige flex items-center justify-center rounded-full border-2 border-heritage-gold/40 shadow-2xl overflow-hidden flex-shrink-0">
+                    <img 
+                      src="https://i.postimg.cc/1XS8MgxX/photo-5994386418404363889-y.jpg" 
+                      alt="Algerian Heritage" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center md:items-start gap-4">
+                    <span className="text-2xl md:text-4xl display-font font-bold tracking-tighter uppercase text-heritage-beige/90">{t('hero.subtitle')}</span>
+                    <p className="text-sm md:text-base font-bold leading-relaxed text-white/50 italic max-w-xl">
+                      {t('footer.disclaimer_text')}
+                    </p>
                   </div>
                 </div>
-                <p className="text-base md:text-xl text-heritage-beige/60 leading-relaxed font-bold italic mb-10 max-w-lg">
-                  "{t('footer.tagline')}"
-                </p>
           </div>
           
           <div className="lg:col-span-3">
@@ -53,32 +57,17 @@ const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
               ))}
             </ul>
           </div>
-          
-          <div className="lg:col-span-3">
-            <h4 className="text-[11px] uppercase tracking-[0.5em] font-black text-heritage-beige mb-10">{t('footer.about')}</h4>
-            <div className="space-y-8">
-              <div>
-                <button 
-                  onClick={onOpenLegal}
-                  className="text-sm font-bold leading-relaxed text-white/50 italic text-left hover:text-heritage-gold transition-colors"
-                >
-                  {t('footer.disclaimer_text')}
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
         
         <div className="pt-20 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="text-[11px] uppercase tracking-[0.4em] font-black text-white/30">
-            {t('footer.copyright')}
-          </div>
-          <div className="flex items-center gap-12">
-            <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.privacy')}</button>
-            <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.terms')}</button>
-          </div>
-          <div className="text-2xl md:text-3xl arabic-serif text-white/10" dir="rtl">
-            {t('footer.independent_note')}
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 text-center md:text-left">
+            <div className="text-[11px] uppercase tracking-[0.4em] font-black text-white/30">
+              {t('footer.copyright')}
+            </div>
+            <div className="flex items-center gap-8 md:gap-12">
+              <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.privacy')}</button>
+              <button onClick={onOpenLegal} className="text-[11px] uppercase tracking-[0.4em] font-black text-white/40 hover:text-white transition-colors">{t('footer.terms')}</button>
+            </div>
           </div>
         </div>
       </div>
@@ -87,15 +76,38 @@ const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
 };
 
 export default function App() {
-  const { t, isRTL, language } = useLanguage();
+  const { t, isRTL, language, setLanguage } = useLanguage();
   const { favorites } = useFavorites();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeSearchQuery, setActiveSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [wilayaFilter, setWilayaFilter] = useState('All');
   const [eraFilter, setEraFilter] = useState('All');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const museumsSectionRef = useRef<HTMLDivElement>(null);
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  // Splash screen timer
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsAppReady(true);
+      setLoading(false);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Manual scroll to results and trigger filter
+  const handleSearchTrigger = () => {
+    setActiveSearchQuery(searchQuery);
+    if (museumsSectionRef.current) {
+      const yOffset = -80;
+      const element = museumsSectionRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   const availableWilayas = useMemo(() => {
     const list = Array.from(new Set(museums.map(m => m.wilaya))).sort();
@@ -111,19 +123,52 @@ export default function App() {
 
   const [showCharter, setShowCharter] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
+  const normalizeSearchText = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Remove French/Latin accents
+      .replace(/[أإآا]/g, 'ا')
+      .replace(/[ةه]/g, 'ه')
+      .replace(/[ىيئ]/g, 'ي')
+      .replace(/ؤ/g, 'و')
+      .replace(/ـ/g, '') // Remove kashida
+      .replace(/[\u064B-\u0652]/g, '') // Remove tashkeel/diacritics
+      .replace(/[^\w\s\u0621-\u064A0-9]/g, ' ') // Replace punctuation with space
+      .replace(/\s+/g, ' ') // Collapse multiple spaces
+      .trim();
+  };
 
   const filteredMuseums = useMemo(() => {
+    // Priority 1: Use live searchQuery for filtering
+    // We fall back to activeSearchQuery if searchQuery is somehow out of sync, but live is better.
+    const normalizedQuery = normalizeSearchText(searchQuery);
+    
+    if (!normalizedQuery) return museums.filter(m => {
+       const matchesCategory = categoryFilter === 'All' || m.category === categoryFilter;
+       const matchesWilaya = wilayaFilter === 'All' || m.wilaya === wilayaFilter;
+       const matchesEra = eraFilter === 'All' || m.period === eraFilter;
+       const matchesFavorites = !showFavoritesOnly || favorites.includes(m.id);
+       return matchesCategory && matchesWilaya && matchesEra && matchesFavorites;
+    });
+
     return museums.filter(m => {
-      const matchesSearch = m.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                           m.wilaya.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           (m.arabicName && m.arabicName.includes(searchQuery)) ||
-                           (m.arabicWilaya && m.arabicWilaya.includes(searchQuery));
+      const searchTargets = [
+        m.name,
+        m.arabicName,
+        m.frenchName,
+        m.wilaya,
+        m.arabicWilaya,
+        m.frenchWilaya,
+        m.category,
+        m.period,
+        m.description,
+        m.arabicDescription,
+        m.frenchDescription
+      ].filter(Boolean).map(text => normalizeSearchText(text!));
+
+      const matchesSearch = searchTargets.some(target => target.includes(normalizedQuery));
+
       const matchesCategory = categoryFilter === 'All' || m.category === categoryFilter;
       const matchesWilaya = wilayaFilter === 'All' || m.wilaya === wilayaFilter;
       const matchesEra = eraFilter === 'All' || m.period === eraFilter;
@@ -153,7 +198,7 @@ export default function App() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-8xl font-black display-font text-heritage-brown tracking-tighter mb-4 px-6">
-              Museum<span className="text-heritage-gold">DZ</span>
+              Discover<span className="text-heritage-gold">MuseumDz</span>
             </h1>
             <div className="w-20 h-[1px] bg-heritage-gold/20 mx-auto overflow-hidden">
               <motion.div
@@ -172,8 +217,14 @@ export default function App() {
           animate={{ opacity: 1 }}
           className="min-h-screen bg-heritage-beige text-dark-brown selection:bg-heritage-gold selection:text-white paper-texture"
         >
-          <main className="relative">
-            <Hero onSearch={setSearchQuery} onFilterChange={setCategoryFilter} />
+          <div className="pt-0">
+            <Navbar />
+            <main className="relative">
+            <Hero 
+              onSearch={setSearchQuery} 
+              onSearchTrigger={handleSearchTrigger}
+              onFilterChange={setCategoryFilter} 
+            />
 
             {/* Mission Section - Recipe 6: Warm Organic / Cultural */}
             <section className="py-24 md:py-52 bg-heritage-sand relative overflow-hidden transition-colors duration-500 border-b border-heritage-gold/10">
@@ -197,7 +248,7 @@ export default function App() {
                     <div className="absolute -top-12 -right-12 w-64 h-64 bg-heritage-gold/10 rounded-full blur-3xl opacity-50" />
                     <div className="absolute -bottom-12 -left-12 w-80 h-80 bg-heritage-emerald/5 rounded-full blur-3xl opacity-50" />
                     
-                    <div className="absolute top-20 -left-12 bg-white/90 p-8 rounded-full luxury-shadow gold-border flex flex-col items-center justify-center text-center z-20 backdrop-blur-md">
+                    <div className="absolute top-20 -left-12 bg-heritage-beige/90 p-8 rounded-full luxury-shadow gold-border flex flex-col items-center justify-center text-center z-20 backdrop-blur-md">
                       <Award className="w-8 h-8 text-heritage-gold mb-2" />
                       <span className="text-[10px] uppercase tracking-widest font-black text-dark-brown">PROGRESS</span>
                       <span className="text-[9px] text-dark-brown/40">Heritage</span>
@@ -290,8 +341,9 @@ export default function App() {
 
             <HistoricalEras />
 
+
             {/* National Museum Directory Registry Portal — Recipe 5: Brutalist / Data Grid */}
-            <section id="registry" className="py-24 md:py-60 relative overflow-hidden bg-heritage-beige">
+            <section id="registry" ref={museumsSectionRef} className="py-24 md:py-60 relative overflow-hidden bg-heritage-beige">
           <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-heritage-gold/[0.03] -skew-x-12 translate-x-1/2 pointer-events-none" />
           <div className="max-w-[1800px] mx-auto px-6 md:px-12 relative z-10">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-24 md:mb-48 gap-12 lg:gap-20">
@@ -309,7 +361,7 @@ export default function App() {
                 <h3 className="text-4xl md:text-8xl arabic-serif text-dark-brown leading-tight mb-12" dir="rtl">{t('inventory.arabic_title')}</h3>
 
                 {/* Advanced Filtering Engine */}
-                <div className="mt-16 md:mt-20 space-y-10 md:space-y-12 bg-white/60 backdrop-blur-3xl p-6 md:p-12 border border-heritage-gold/20 luxury-shadow relative overflow-hidden rounded-3xl">
+                <div className="mt-16 md:mt-20 space-y-10 md:space-y-12 bg-heritage-sand/60 backdrop-blur-3xl p-6 md:p-12 border border-heritage-gold/20 luxury-shadow relative overflow-hidden rounded-3xl">
                   <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-heritage-gold/0 via-heritage-gold/50 to-heritage-gold/0" />
                   
                   <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10">
@@ -396,11 +448,6 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-16 md:mt-20 p-8 md:p-10 bg-white/40 border-l-4 border-heritage-gold max-w-2xl luxury-shadow rounded-r-2xl">
-                  <p className="text-xl md:text-2xl text-heritage-brown font-light italic leading-relaxed">
-                    "{t('footer.tagline')}"
-                  </p>
-                </div>
 
                 {/* Regional Summary — Recipe 1: Technical Grid */}
                 <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -465,7 +512,7 @@ export default function App() {
                 <h3 className="text-2xl md:text-4xl display-font mb-4 font-light italic">{t('inventory.no_matching')}</h3>
                 <p className="text-base md:text-lg text-muted-foreground max-w-md mx-auto leading-relaxed">{t('inventory.no_matching_desc')}</p>
                 <button 
-                  onClick={() => { setSearchQuery(''); setCategoryFilter('All'); }}
+                  onClick={() => { setSearchQuery(''); setActiveSearchQuery(''); setCategoryFilter('All'); }}
                   className="mt-12 group flex items-center gap-4 mx-auto text-[11px] uppercase tracking-[0.4em] text-heritage-gold font-black hover:text-heritage-brown transition-colors"
                 >
                   <div className="w-8 h-[1px] bg-heritage-gold group-hover:bg-heritage-brown transition-colors" />
@@ -483,7 +530,8 @@ export default function App() {
       <Footer onOpenLegal={() => setIsLegalOpen(true)} />
       <HeritageGuide />
       <LegalModal isOpen={isLegalOpen} onClose={() => setIsLegalOpen(false)} />
-    </motion.div>
+          </div>
+        </motion.div>
     )}
     </AnimatePresence>
   );

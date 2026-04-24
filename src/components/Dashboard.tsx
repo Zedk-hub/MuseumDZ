@@ -43,7 +43,7 @@ export const Dashboard: React.FC = () => {
             <h2 className="text-4xl md:text-8xl display-font mb-4 font-bold tracking-tighter text-dark-brown leading-tight">{t('dashboard.performance')}</h2>
             <h3 className="text-2xl md:text-5xl arabic-serif text-dark-brown">{t('dashboard.report')}</h3>
           </div>
-          <div className="flex items-center gap-4 md:gap-6 bg-white/80 border border-heritage-gold/10 px-6 md:px-10 py-4 md:py-6 luxury-shadow backdrop-blur-sm rounded-xl">
+          <div className="flex items-center gap-4 md:gap-6 bg-heritage-sand/80 border border-heritage-gold/10 px-6 md:px-10 py-4 md:py-6 luxury-shadow backdrop-blur-sm rounded-xl">
             <div className="relative">
               <ShieldCheck className="w-6 h-6 text-dark-brown relative z-10" />
               <div className="absolute inset-0 bg-dark-brown/10 blur-sm rounded-full" />
@@ -63,7 +63,7 @@ export const Dashboard: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white/40 border border-heritage-gold/10 p-8 md:p-10 luxury-shadow group relative overflow-hidden transition-all duration-500 hover:border-heritage-gold/30 rounded-2xl"
+              className="bg-heritage-sand/40 border border-heritage-gold/10 p-8 md:p-10 luxury-shadow group relative overflow-hidden transition-all duration-500 hover:border-heritage-gold/30 rounded-2xl"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-heritage-gold/5 rounded-bl-full -mr-12 -mt-12 transition-all duration-500 group-hover:bg-heritage-gold/10" />
               <div className="flex justify-between items-start mb-6 md:mb-8">
@@ -82,7 +82,7 @@ export const Dashboard: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-16">
-          <div className="lg:col-span-8 bg-white/40 border border-heritage-gold/10 p-6 md:p-14 luxury-shadow relative overflow-hidden rounded-3xl">
+          <div className="lg:col-span-8 bg-heritage-sand/40 border border-heritage-gold/10 p-6 md:p-14 luxury-shadow relative overflow-hidden rounded-3xl">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-heritage-beige via-heritage-gold to-heritage-red opacity-30" />
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 md:mb-16 gap-6">
               <div>
@@ -112,7 +112,7 @@ export const Dashboard: React.FC = () => {
                       borderRadius: '12px', 
                       border: '1px solid rgba(197,160,89,0.3)', 
                       boxShadow: '0 10px 20px rgba(0,0,0,0.05)',
-                      backgroundColor: 'rgba(253, 251, 247, 0.95)',
+                      backgroundColor: 'rgba(197, 167, 135, 0.95)',
                       backdropFilter: 'blur(10px)',
                       padding: '12px'
                     }}
@@ -127,7 +127,7 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-4 bg-white/40 border border-heritage-gold/10 p-6 md:p-14 luxury-shadow rounded-3xl">
+          <div className="lg:col-span-4 bg-heritage-sand/40 border border-heritage-gold/10 p-6 md:p-14 luxury-shadow rounded-3xl">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 md:mb-16 gap-4">
               <div>
                 <h3 className="text-lg md:text-2xl display-font font-bold tracking-tight text-dark-brown">{t('dashboard.density')}</h3>

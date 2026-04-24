@@ -38,7 +38,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose }) => {
             className="relative w-full max-w-4xl max-h-[90vh] bg-heritage-beige rounded-[2rem] overflow-hidden luxury-shadow border border-heritage-gold/20 flex flex-col"
           >
             {/* Header */}
-            <div className="p-8 md:p-12 border-b border-heritage-gold/10 flex justify-between items-center bg-white/50 relative">
+            <div className="p-8 md:p-12 border-b border-heritage-gold/10 flex justify-between items-center bg-heritage-beige/50 relative">
               <div className="absolute inset-0 cultural-pattern opacity-[0.03] pointer-events-none" />
               <div className="flex items-center gap-6 relative z-10">
                 <div className="w-12 h-12 bg-dark-brown rounded-full flex items-center justify-center shadow-lg border border-heritage-gold/20">
@@ -77,7 +77,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose }) => {
                     className="space-y-4 group"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white border border-heritage-gold/20 flex items-center justify-center luxury-shadow group-hover:bg-heritage-gold group-hover:text-white transition-colors duration-500">
+                      <div className="w-10 h-10 rounded-xl bg-heritage-beige border border-heritage-gold/20 flex items-center justify-center luxury-shadow group-hover:bg-heritage-gold group-hover:text-white transition-colors duration-500">
                         <item.icon className="w-5 h-5" />
                       </div>
                       <h3 className="text-xl font-bold display-font text-dark-brown group-hover:text-heritage-gold transition-colors">
@@ -100,7 +100,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose }) => {
             </div>
 
             {/* Footer */}
-            <div className="p-8 border-t border-heritage-gold/10 flex justify-center bg-white/30 backdrop-blur-md">
+            <div className="p-8 border-t border-heritage-gold/10 flex justify-center bg-heritage-sand/30 backdrop-blur-md">
               <button 
                 onClick={onClose}
                 className="px-12 py-5 bg-dark-brown text-heritage-beige rounded-2xl text-[10px] uppercase tracking-[0.4em] font-black hover:bg-heritage-emerald transition-all luxury-shadow"
