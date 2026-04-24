@@ -2,8 +2,30 @@ import { GoogleGenAI } from "@google/genai";
 import { museums } from "../data/museums";
 import { eras } from "../data/eras";
 
-// Initialize Gemini with the API key from environment
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// Safe initialization function
+let genAI: GoogleGenAI | null = null;
+
+const getGenAI = () => {
+  // Try to find the API key in multiple common locations
+  const apiKey = process.env.GEMINI_API_KEY || 
+                 (import.meta as any).env?.VITE_GEMINI_API_KEY || 
+                 (window as any).GEMINI_API_KEY;
+
+  if (!apiKey || apiKey === "undefined" || apiKey === "null" || apiKey === "") {
+    console.warn("Heritage AI: GEMINI_API_KEY is missing or invalid.");
+    return null;
+  }
+
+  if (!genAI) {
+    try {
+      genAI = new GoogleGenAI({ apiKey });
+    } catch (e) {
+      console.error("Heritage AI: Failed to initialize GoogleGenAI", e);
+      return null;
+    }
+  }
+  return genAI;
+};
 
 const SYSTEM_INSTRUCTION = `
 You are the "Heritage AI Guide" for the Algerian Heritage National Portal. 
@@ -38,6 +60,11 @@ STRICT RULES:
 
 export const chatWithHeritageAI = async (message: string, history: any[] = []) => {
   try {
+    const ai = getGenAI();
+    if (!ai) {
+      return "The Heritage AI Guide is currently unconfigured. Please ensure the API key is set.";
+    }
+
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: [
